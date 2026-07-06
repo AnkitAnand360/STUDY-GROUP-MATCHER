@@ -1,4 +1,7 @@
 const User = require("../models/User");
+const {
+  generateMatchExplanation,
+} = require("../services/geminiService");
 
 exports.findMatches = async (req, res) => {
 
@@ -12,25 +15,29 @@ exports.findMatches = async (req, res) => {
         _id: { $ne: currentUser._id },
       });
 
-    const matches = users.map(user => {
+    const matches = await Promise.all(
+  users.map(async (user) => {
+    const score = calculateScore(currentUser, user);
 
-      const score =
-        calculateScore(
-          currentUser,
-          user
-        );
+    const explanation =
+      await generateMatchExplanation(
+        currentUser,
+        user,
+        score
+      );
 
-      return {
-        _id: user._id,
-        name: user.name,
-        email: user.email,
-        skills: user.skills,
-        subjects: user.subjects,
-        studyGoal: user.studyGoal,
-        score,
-      };
-
-    });
+    return {
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      skills: user.skills,
+      subjects: user.subjects,
+      studyGoal: user.studyGoal,
+      score,
+      explanation,
+    };
+  })
+);
 
     matches.sort(
       (a, b) => b.score - a.score
