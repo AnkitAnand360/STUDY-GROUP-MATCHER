@@ -12,9 +12,9 @@ const authRoutes = require("./routes/authRoutes");
 
 const app = express();
 
-const profileRoutes = require(
-  "./routes/profileRoutes"
-);
+const profileRoutes = require("./routes/profileRoutes");
+
+const matchRoutes = require("./routes/matchRoutes");
 
 connectDB();
 
@@ -28,6 +28,8 @@ app.use(
   "/api/profile",
   profileRoutes
 );
+
+app.use("/api/match", matchRoutes);
 
 app.get("/", (req, res) => {
   res.send("Study Match API Running");

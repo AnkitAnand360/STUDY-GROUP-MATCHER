@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-import { days } from "../data/days";
+import { days } from "../data/day";
 import { timeSlots } from "../data/timeSlots";
 
 function Profile() {
