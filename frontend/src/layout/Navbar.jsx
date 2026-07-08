@@ -41,7 +41,7 @@ function Navbar() {
     >
       <Link to="/" className="flex items-center">
         <h1 className="text-xl font-black bg-gradient-to-r from-purple-500 to-indigo-500 bg-clip-text text-transparent m-0 tracking-tight">
-          StudyMatch AI
+         AI-Study-Group-Matcher
         </h1>
       </Link>
 

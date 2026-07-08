@@ -55,12 +55,12 @@ function Dashboard() {
     try {
       const token = localStorage.getItem("token");
       
-      const dashRes = await axios.get("http://localhost:5000/api/dashboard", {
+      const dashRes = await axios.get("/api/dashboard", {
         headers: { Authorization: token },
       });
       setMetrics(dashRes.data);
 
-      const matchRes = await axios.get("http://localhost:5000/api/match", {
+      const matchRes = await axios.get("/api/match", {
         headers: { Authorization: token },
       });
       setPartnerCount(matchRes.data.length);

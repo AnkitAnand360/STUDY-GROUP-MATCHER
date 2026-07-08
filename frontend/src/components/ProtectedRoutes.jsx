@@ -1,6 +1,5 @@
 import { Navigate } from "react-router-dom";
 import Sidebar from "../layout/Sidebar";
-import Navbar from "../layout/Navbar";
 
 function ProtectedRoute({ children }) {
   const token = localStorage.getItem("token");
@@ -16,8 +15,6 @@ function ProtectedRoute({ children }) {
         <div className="aurora-blob-1"></div>
         <div className="aurora-blob-2"></div>
       </div>
-
-      <Navbar />
 
       <div className="flex">
         <Sidebar />

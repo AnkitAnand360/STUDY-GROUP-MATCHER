@@ -74,7 +74,7 @@ function StuddyPlanner() {
     setError("");
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get("http://localhost:5000/api/planner/today", {
+      const response = await axios.get("/api/planner/today", {
         headers: {
           Authorization: token,
         },
@@ -99,7 +99,7 @@ function StuddyPlanner() {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.post(
-        "http://localhost:5000/api/planner/generate",
+        "/api/planner/generate",
         {},
         {
           headers: {
@@ -122,7 +122,7 @@ function StuddyPlanner() {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.put(
-        `http://localhost:5000/api/planner/${plan._id}/${taskId}`,
+        `/api/planner/${plan._id}/${taskId}`,
         {},
         {
           headers: {

@@ -63,12 +63,12 @@ function Chat() {
     try {
       const token = localStorage.getItem("token");
       
-      const userRes = await axios.get("http://localhost:5000/api/groups", {
+      const userRes = await axios.get("/api/groups", {
         headers: { Authorization: token },
       });
       setUserGroups(userRes.data);
 
-      const allRes = await axios.get("http://localhost:5000/api/groups/all", {
+      const allRes = await axios.get("/api/groups/all", {
         headers: { Authorization: token },
       });
       setAllGroups(allRes.data);
@@ -90,7 +90,7 @@ function Chat() {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.get(
-        `http://localhost:5000/api/messages/${groupId}`,
+        `/api/messages/${groupId}`,
         {
           headers: { Authorization: token },
         }
@@ -108,7 +108,7 @@ function Chat() {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.post(
-        "http://localhost:5000/api/messages",
+        "/api/messages",
         {
           groupId,
           text,
@@ -135,7 +135,7 @@ function Chat() {
     try {
       const token = localStorage.getItem("token");
       const groupResponse = await axios.post(
-        "http://localhost:5000/api/groups",
+        "/api/groups",
         { name: newRoomName },
         { headers: { Authorization: token } }
       );
@@ -143,7 +143,7 @@ function Chat() {
       const newGroupId = groupResponse.data._id;
       
       await axios.put(
-        `http://localhost:5000/api/groups/join/${newGroupId}`,
+        `/api/groups/join/${newGroupId}`,
         {},
         { headers: { Authorization: token } }
       );
@@ -159,7 +159,7 @@ function Chat() {
     try {
       const token = localStorage.getItem("token");
       await axios.put(
-        `http://localhost:5000/api/groups/join/${id}`,
+        `/api/groups/join/${id}`,
         {},
         { headers: { Authorization: token } }
       );
@@ -182,7 +182,7 @@ function Chat() {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.post(
-        "http://localhost:5000/api/planner/explain",
+        "/api/planner/explain",
         { topic: aiPrompt },
         { headers: { Authorization: token } }
       );

@@ -27,7 +27,7 @@ function Matches() {
   const fetchMatches = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get("http://localhost:5000/api/match", {
+      const response = await axios.get("/api/match", {
         headers: {
           Authorization: token,
         },
@@ -57,7 +57,7 @@ function Matches() {
     try {
       const token = localStorage.getItem("token");
       const groupResponse = await axios.post(
-        "http://localhost:5000/api/groups",
+        "/api/groups",
         {
           name: `Room with ${matchedUser.name}`,
         },
@@ -71,7 +71,7 @@ function Matches() {
       const groupId = groupResponse.data._id;
       
       await axios.put(
-        `http://localhost:5000/api/groups/join/${groupId}`,
+        `/api/groups/join/${groupId}`,
         {},
         {
           headers: {

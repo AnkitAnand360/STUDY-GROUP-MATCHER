@@ -5,8 +5,9 @@ const jwt = require("jsonwebtoken");
 exports.registerUser = async (req, res) => {
   try {
     const { name, email, password } = req.body;
+    const normalizedEmail = email ? email.toLowerCase() : "";
 
-    const userExists = await User.findOne({ email });
+    const userExists = await User.findOne({ email: normalizedEmail });
 
     if (userExists) {
       return res.status(400).json({
@@ -18,7 +19,7 @@ exports.registerUser = async (req, res) => {
 
     const user = await User.create({
       name,
-      email,
+      email: normalizedEmail,
       password: hashedPassword,
     });
 
@@ -37,8 +38,9 @@ exports.registerUser = async (req, res) => {
 exports.loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
+    const normalizedEmail = email ? email.toLowerCase() : "";
 
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email: normalizedEmail });
 
     if (!user) {
       return res.status(400).json({

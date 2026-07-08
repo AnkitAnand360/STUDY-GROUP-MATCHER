@@ -29,7 +29,7 @@ function Profile() {
         localStorage.getItem("token");
 
       const response = await axios.get(
-        "http://localhost:5000/api/profile",
+        "/api/profile",
         {
           headers: {
             Authorization: token,
@@ -65,7 +65,7 @@ function Profile() {
         localStorage.getItem("token");
 
       await axios.put(
-        "http://localhost:5000/api/profile",
+        "/api/profile",
         {
           skills: skills
             .split(",")
