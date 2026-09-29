@@ -36,9 +36,43 @@ require("./routes/notificationRoutes");
 
 connectDB();
 
-app.use(cors());
+const corsOptions = {
+  origin: (origin, callback) => {
+    // Allow requests with no origin (curl, server-to-server) or any localhost/vercel domain
+    if (
+      !origin ||
+      origin.endsWith(".vercel.app") ||
+      /^http:\/\/localhost:\d+$/.test(origin) ||
+      /^http:\/\/127\.0\.0\.1:\d+$/.test(origin)
+    ) {
+      return callback(null, true);
+    }
+    return callback(null, true);
+  },
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
+
+app.use(cors(corsOptions));
+
 
 app.use(express.json());
+
+// Database readiness check middleware
+app.use((req, res, next) => {
+  if (req.path === "/" || req.path === "/api/health") {
+    return next();
+  }
+  const mongoose = require("mongoose");
+  if (mongoose.connection.readyState !== 1) {
+    return res.status(503).json({
+      error: "Database Unavailable",
+      message: "MongoDB is not connected. Please verify your MongoDB Atlas cluster is running and check MONGO_URI in backend/.env.",
+    });
+  }
+  next();
+});
 
 app.use("/api/auth", authRoutes);
 
@@ -72,6 +106,14 @@ app.get("/", (req, res) => {
   res.send("Study Match API Running");
 });
 
+app.get("/api/health", (req, res) => {
+  const mongoose = require("mongoose");
+  res.json({
+    status: "ok",
+    database: mongoose.connection.readyState === 1 ? "connected" : "disconnected",
+  });
+});
+
 const http = require("http");
 const { Server } = require("socket.io");
 
@@ -79,10 +121,14 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: (origin, callback) => {
+      callback(null, true);
+    },
     methods: ["GET", "POST"],
+    credentials: true,
   },
 });
+
 
 io.on("connection", (socket) => {
 
