@@ -1,5 +1,9 @@
-const dns = require("dns");
-dns.setServers(["1.1.1.1", "8.8.8.8"]);
+try {
+  const dns = require("dns");
+  dns.setServers(["1.1.1.1", "8.8.8.8"]);
+} catch (e) {
+  // Ignore DNS override errors in cloud environments
+}
 
 const path = require("path");
 require("dotenv").config({ path: path.join(__dirname, ".env") });
