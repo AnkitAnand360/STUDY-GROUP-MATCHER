@@ -211,13 +211,13 @@ function Chat() {
   return (
     <div className="space-y-6 text-left h-[calc(100vh-140px)] flex flex-col">
       {/* Tab Selector */}
-      <div className="flex gap-4 border-b border-gray-800 pb-2 select-none">
+      <div className="flex gap-4 border-b border-gray-200 dark:border-gray-800 pb-2 select-none">
         <button
           onClick={() => setActiveTab("group")}
           className={`pb-2 px-1 font-extrabold text-sm transition-all cursor-pointer ${
             activeTab === "group"
-              ? "text-purple-400 border-b-2 border-purple-500"
-              : "text-gray-500 hover:text-gray-300"
+              ? "text-purple-600 dark:text-purple-400 border-b-2 border-purple-500"
+              : "text-gray-500 hover:text-gray-800 dark:hover:text-gray-300"
           }`}
         >
           💬 Study Rooms
@@ -226,8 +226,8 @@ function Chat() {
           onClick={() => setActiveTab("ai")}
           className={`pb-2 px-1 font-extrabold text-sm transition-all cursor-pointer ${
             activeTab === "ai"
-              ? "text-purple-400 border-b-2 border-purple-500"
-              : "text-gray-500 hover:text-gray-300"
+              ? "text-purple-600 dark:text-purple-400 border-b-2 border-purple-500"
+              : "text-gray-500 hover:text-gray-800 dark:hover:text-gray-300"
           }`}
         >
           ✨ Gemini AI Assistant
@@ -237,11 +237,11 @@ function Chat() {
       {activeTab === "group" ? (
         <div className="flex-1 flex flex-col md:flex-row gap-6 overflow-hidden min-h-0">
           {/* Sidebar */}
-          <div className="w-full md:w-72 glass-panel border-gray-800/80 rounded-[24px] p-4 flex flex-col justify-between h-full overflow-y-auto">
+          <div className="w-full md:w-72 glass-panel border-gray-200 dark:border-gray-800/80 rounded-[24px] p-4 flex flex-col justify-between h-full overflow-y-auto">
             <div className="space-y-6">
               {/* Create Group Form */}
               <form onSubmit={handleCreateGroup} className="space-y-2">
-                <h4 className="text-[10px] uppercase font-black text-gray-500 tracking-wider">
+                <h4 className="text-[10px] uppercase font-black text-gray-500 dark:text-gray-400 tracking-wider">
                   Create Room
                 </h4>
                 <div className="flex gap-2">
@@ -251,7 +251,7 @@ function Chat() {
                     value={newRoomName}
                     onChange={(e) => setNewRoomName(e.target.value)}
                     required
-                    className="flex-1 border border-gray-800 p-2 text-xs rounded-xl bg-gray-950 text-gray-200 focus:outline-none focus:ring-1 focus:ring-purple-500"
+                    className="flex-1 border border-gray-300 dark:border-gray-800 p-2 text-xs rounded-xl bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:ring-1 focus:ring-purple-500"
                   />
                   <Button type="submit" size="sm" className="px-3">
                     +
@@ -261,12 +261,12 @@ function Chat() {
 
               {/* User Joined Rooms */}
               <div className="space-y-1.5">
-                <h4 className="text-[10px] uppercase font-black text-gray-500 tracking-wider">
+                <h4 className="text-[10px] uppercase font-black text-gray-500 dark:text-gray-400 tracking-wider">
                   Joined Rooms
                 </h4>
                 <div className="space-y-1 max-h-[160px] overflow-y-auto pr-1">
                   {userGroups.length === 0 ? (
-                    <p className="text-xs text-gray-600">No groups joined yet.</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">No groups joined yet.</p>
                   ) : (
                     userGroups.map((g) => (
                       <button
@@ -274,8 +274,8 @@ function Chat() {
                         onClick={() => navigate(`/chat/${g._id}`)}
                         className={`w-full text-left font-bold px-3 py-2 rounded-xl text-xs transition-all cursor-pointer ${
                           groupId === g._id
-                            ? "bg-purple-500/15 border border-purple-500/30 text-purple-300"
-                            : "hover:bg-gray-850/50 text-gray-400 hover:text-gray-200"
+                            ? "bg-purple-500/15 border border-purple-500/30 text-purple-700 dark:text-purple-300"
+                            : "hover:bg-gray-100 dark:hover:bg-gray-850/50 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
                         }`}
                       >
                         # {g.name}
@@ -287,27 +287,27 @@ function Chat() {
 
               {/* Explore Rooms */}
               <div className="space-y-1.5">
-                <h4 className="text-[10px] uppercase font-black text-gray-500 tracking-wider">
+                <h4 className="text-[10px] uppercase font-black text-gray-500 dark:text-gray-400 tracking-wider">
                   Explore Public Rooms
                 </h4>
                 <div className="space-y-1.5 max-h-[160px] overflow-y-auto pr-1">
                   {allGroups.filter((g) => !userGroups.some((ug) => ug._id === g._id))
                     .length === 0 ? (
-                    <p className="text-xs text-gray-600">No public groups.</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">No public groups.</p>
                   ) : (
                     allGroups
                       .filter((g) => !userGroups.some((ug) => ug._id === g._id))
                       .map((g) => (
                         <div
                           key={g._id}
-                          className="flex justify-between items-center bg-gray-950/60 p-2 rounded-xl border border-gray-800/80"
+                          className="flex justify-between items-center bg-gray-50 dark:bg-gray-950/60 p-2 rounded-xl border border-gray-200 dark:border-gray-800/80"
                         >
-                          <span className="text-xs font-semibold text-gray-300 truncate max-w-[110px]">
+                          <span className="text-xs font-semibold text-gray-700 dark:text-gray-300 truncate max-w-[110px]">
                             # {g.name}
                           </span>
                           <button
                             onClick={() => handleJoinGroup(g._id)}
-                            className="bg-purple-500/10 hover:bg-purple-500/25 border border-purple-500/20 text-purple-300 px-2 py-0.5 rounded text-[10px] font-bold transition-colors cursor-pointer"
+                            className="bg-purple-500/10 hover:bg-purple-500/25 border border-purple-500/20 text-purple-600 dark:text-purple-300 px-2 py-0.5 rounded text-[10px] font-bold transition-colors cursor-pointer"
                           >
                             Join
                           </button>
@@ -320,13 +320,13 @@ function Chat() {
           </div>
 
           {/* Main Chat Panel */}
-          <div className="flex-1 glass-panel border-gray-800/80 rounded-[24px] flex flex-col justify-between h-full overflow-hidden">
+          <div className="flex-1 glass-panel border-gray-200 dark:border-gray-800/80 rounded-[24px] flex flex-col justify-between h-full overflow-hidden">
             {groupId && groupId !== "lobby" ? (
               <>
                 {/* Header */}
-                <div className="p-4 bg-gray-950/40 border-b border-gray-800/60 flex items-center">
+                <div className="p-4 bg-gray-50 dark:bg-gray-950/40 border-b border-gray-200 dark:border-gray-800/60 flex items-center">
                   <span className="text-2xl text-purple-500 mr-2 select-none font-black">#</span>
-                  <h3 className="text-xl font-black text-white truncate m-0">
+                  <h3 className="text-xl font-black text-gray-900 dark:text-white truncate m-0">
                     {roomName || "Study Group"}
                   </h3>
                 </div>
@@ -349,10 +349,10 @@ function Chat() {
                         className="flex flex-col"
                       >
                         <div className="flex items-baseline gap-2 mb-0.5">
-                          <span className="font-extrabold text-sm text-gray-200">
+                          <span className="font-extrabold text-sm text-gray-800 dark:text-gray-200">
                             {msg.sender?.name || "Unknown"}
                           </span>
-                          <span className="text-[10px] text-gray-500">
+                          <span className="text-[10px] text-gray-500 dark:text-gray-400">
                             {msg.createdAt
                               ? new Date(msg.createdAt).toLocaleTimeString([], {
                                   hour: "2-digit",
@@ -361,7 +361,7 @@ function Chat() {
                               : ""}
                           </span>
                         </div>
-                        <p className="text-sm bg-gray-900 border border-gray-800 p-2.5 rounded-2xl rounded-tl-none leading-relaxed text-gray-300 inline-block self-start max-w-[85%] break-words">
+                        <p className="text-sm bg-gray-100 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 p-2.5 rounded-2xl rounded-tl-none leading-relaxed text-gray-800 dark:text-gray-200 inline-block self-start max-w-[85%] break-words">
                           {msg.text}
                         </p>
                       </motion.div>
@@ -373,10 +373,10 @@ function Chat() {
                 {/* Send form */}
                 <form
                   onSubmit={sendMessage}
-                  className="p-4 bg-gray-950/40 border-t border-gray-800/60 flex gap-3"
+                  className="p-4 bg-white dark:bg-gray-950/40 border-t border-gray-200 dark:border-gray-800/60 flex gap-3"
                 >
                   <input
-                    className="flex-1 border border-gray-800 p-3 text-sm rounded-xl focus:outline-none focus:ring-1 focus:ring-purple-500 bg-gray-950 text-gray-200"
+                    className="flex-1 border border-gray-300 dark:border-gray-800 p-3 text-sm rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500"
                     value={text}
                     onChange={(e) => setText(e.target.value)}
                     placeholder={`Message #${roomName}...`}
@@ -387,13 +387,13 @@ function Chat() {
               </>
             ) : (
               <div className="flex-1 flex flex-col justify-center items-center p-10 text-center">
-                <div className="w-16 h-16 rounded-full bg-purple-500/10 border border-purple-500/25 flex items-center justify-center text-purple-400 text-3xl mb-4 font-black select-none">
+                <div className="w-16 h-16 rounded-full bg-purple-500/10 border border-purple-500/25 flex items-center justify-center text-purple-600 dark:text-purple-400 text-3xl mb-4 font-black select-none">
                   #
                 </div>
-                <h3 className="text-2xl font-black text-white mb-2">
+                <h3 className="text-2xl font-black text-gray-900 dark:text-white mb-2">
                   Select or Create a Study Room
                 </h3>
-                <p className="text-gray-400 text-sm max-w-sm mb-6">
+                <p className="text-gray-600 dark:text-gray-400 text-sm max-w-sm mb-6">
                   Select a room in the sidebar or match with peers to start collaborating.
                 </p>
               </div>
@@ -404,26 +404,26 @@ function Chat() {
         /* Gemini AI Assistant */
         <div className="flex-1 flex flex-col md:flex-row gap-6 overflow-hidden min-h-0">
           {/* AI Prompts list */}
-          <div className="w-full md:w-72 glass-panel border-gray-800/80 rounded-[24px] p-4 space-y-4 h-full overflow-y-auto select-none">
-            <h4 className="text-xs uppercase font-black text-gray-500 tracking-wider">
+          <div className="w-full md:w-72 glass-panel border-gray-200 dark:border-gray-800/80 rounded-[24px] p-4 space-y-4 h-full overflow-y-auto select-none">
+            <h4 className="text-xs uppercase font-black text-gray-500 dark:text-gray-400 tracking-wider">
               Quick Suggestions
             </h4>
             <div className="space-y-2">
               <button
                 onClick={() => loadSuggestion("Explain React Hooks (useEffect, useState).")}
-                className="w-full text-left p-3 rounded-xl border border-gray-850 hover:border-purple-500/30 text-xs font-bold text-gray-400 hover:text-gray-200 transition-all cursor-pointer bg-gray-900/40"
+                className="w-full text-left p-3 rounded-xl border border-gray-200 dark:border-gray-800 hover:border-purple-500/30 text-xs font-bold text-gray-700 dark:text-gray-400 hover:text-purple-600 dark:hover:text-gray-200 transition-all cursor-pointer bg-white/60 dark:bg-gray-900/40"
               >
                 Explain React Hooks
               </button>
               <button
                 onClick={() => loadSuggestion("Generate 5 DSA interview questions on Arrays & HashMaps.")}
-                className="w-full text-left p-3 rounded-xl border border-gray-850 hover:border-purple-500/30 text-xs font-bold text-gray-400 hover:text-gray-200 transition-all cursor-pointer bg-gray-900/40"
+                className="w-full text-left p-3 rounded-xl border border-gray-200 dark:border-gray-800 hover:border-purple-500/30 text-xs font-bold text-gray-700 dark:text-gray-400 hover:text-purple-600 dark:hover:text-gray-200 transition-all cursor-pointer bg-white/60 dark:bg-gray-900/40"
               >
                 Generate 5 DSA Questions
               </button>
               <button
                 onClick={() => loadSuggestion("Create a study timeline for learning MongoDB in 3 days.")}
-                className="w-full text-left p-3 rounded-xl border border-gray-850 hover:border-purple-500/30 text-xs font-bold text-gray-400 hover:text-gray-200 transition-all cursor-pointer bg-gray-900/40"
+                className="w-full text-left p-3 rounded-xl border border-gray-200 dark:border-gray-800 hover:border-purple-500/30 text-xs font-bold text-gray-700 dark:text-gray-400 hover:text-purple-600 dark:hover:text-gray-200 transition-all cursor-pointer bg-white/60 dark:bg-gray-900/40"
               >
                 MongoDB Study Timeline
               </button>
@@ -431,10 +431,10 @@ function Chat() {
           </div>
 
           {/* AI Conversation Container */}
-          <div className="flex-1 glass-panel border-gray-800/80 rounded-[24px] flex flex-col justify-between h-full overflow-hidden">
-            <div className="p-4 bg-gray-950/40 border-b border-gray-800/60 flex items-center">
+          <div className="flex-1 glass-panel border-gray-200 dark:border-gray-800/80 rounded-[24px] flex flex-col justify-between h-full overflow-hidden">
+            <div className="p-4 bg-white/80 dark:bg-gray-950/40 border-b border-gray-200 dark:border-gray-800/60 flex items-center">
               <span className="text-xl mr-2 select-none">✨</span>
-              <h3 className="text-xl font-black text-white m-0">
+              <h3 className="text-xl font-black text-gray-900 dark:text-white m-0">
                 Gemini AI Chat Assistant
               </h3>
             </div>
@@ -452,7 +452,7 @@ function Chat() {
                   <div key={index} className="flex flex-col space-y-1">
                     <span
                       className={`text-[10px] uppercase font-black tracking-wider ${
-                        msg.role === "user" ? "text-indigo-400" : "text-purple-400"
+                        msg.role === "user" ? "text-indigo-600 dark:text-indigo-400" : "text-purple-600 dark:text-purple-400"
                       }`}
                     >
                       {msg.role === "user" ? "You" : "Gemini AI"}
@@ -460,8 +460,8 @@ function Chat() {
                     <p
                       className={`text-sm p-3.5 rounded-2xl leading-relaxed whitespace-pre-line ${
                         msg.role === "user"
-                          ? "bg-indigo-500/10 text-indigo-200 border border-indigo-500/20 self-start max-w-[85%]"
-                          : "bg-purple-500/10 text-purple-200 border border-purple-500/20 self-start max-w-[95%]"
+                          ? "bg-indigo-50 dark:bg-indigo-500/10 text-indigo-900 dark:text-indigo-200 border border-indigo-200 dark:border-indigo-500/20 self-start max-w-[85%]"
+                          : "bg-purple-50 dark:bg-purple-500/10 text-purple-900 dark:text-purple-200 border border-purple-200 dark:border-purple-500/20 self-start max-w-[95%]"
                       }`}
                     >
                       {msg.text}
@@ -471,10 +471,10 @@ function Chat() {
               )}
               {aiLoading && (
                 <div className="flex flex-col space-y-2">
-                  <span className="text-[10px] uppercase font-black text-purple-400 tracking-wider animate-pulse">
+                  <span className="text-[10px] uppercase font-black text-purple-600 dark:text-purple-400 tracking-wider animate-pulse">
                     Gemini is thinking...
                   </span>
-                  <div className="bg-purple-500/10 p-4 border border-dashed border-purple-500/20 rounded-2xl w-2/3">
+                  <div className="bg-purple-50 dark:bg-purple-500/10 p-4 border border-dashed border-purple-200 dark:border-purple-500/20 rounded-2xl w-2/3">
                     <Loader variant="text" count={2} />
                   </div>
                 </div>
@@ -483,10 +483,10 @@ function Chat() {
 
             <form
               onSubmit={handleAiPromptSubmit}
-              className="p-4 bg-gray-950/40 border-t border-gray-800/60 flex gap-3"
+              className="p-4 bg-white dark:bg-gray-950/40 border-t border-gray-200 dark:border-gray-800/60 flex gap-3"
             >
               <input
-                className="flex-1 border border-gray-800 p-3 text-sm rounded-xl focus:outline-none focus:ring-1 focus:ring-purple-500 bg-gray-950 text-gray-250"
+                className="flex-1 border border-gray-300 dark:border-gray-800 p-3 text-sm rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500"
                 value={aiPrompt}
                 onChange={(e) => setAiPrompt(e.target.value)}
                 placeholder="Ask Gemini (e.g. Explain binary trees...)"

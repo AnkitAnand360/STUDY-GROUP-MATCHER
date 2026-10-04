@@ -77,7 +77,7 @@ function Sidebar() {
   };
 
   return (
-    <aside className="hidden lg:flex flex-col w-64 h-screen fixed left-0 top-0 bg-white dark:bg-gray-900 border-r border-gray-150 dark:border-gray-800 p-5 justify-between select-none z-20">
+    <aside className="hidden lg:flex flex-col w-64 h-screen fixed left-0 top-0 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 p-5 justify-between select-none z-20">
       <div className="space-y-8">
         {/* Brand */}
         <Link to="/" className="block">
@@ -96,8 +96,8 @@ function Sidebar() {
                 to={item.path}
                 className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold transition-all ${
                   active
-                    ? "bg-purple-50 dark:bg-purple-950/40 text-purple-650 dark:text-purple-305"
-                    : "text-gray-550 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-850 hover:text-gray-900 dark:hover:text-gray-100"
+                    ? "bg-purple-50 dark:bg-purple-950/40 text-purple-700 dark:text-purple-300"
+                    : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-100"
                 }`}
               >
                 {item.icon}
@@ -109,11 +109,11 @@ function Sidebar() {
       </div>
 
       {/* Footer / Theme & Logout */}
-      <div className="space-y-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+      <div className="space-y-4 pt-4 border-t border-gray-200 dark:border-gray-800">
         {/* Dark Mode Toggle */}
         <button
           onClick={toggleTheme}
-          className="w-full flex items-center justify-between px-4 py-2.5 rounded-xl text-sm font-bold text-gray-555 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-850 transition-colors cursor-pointer"
+          className="w-full flex items-center justify-between px-4 py-2.5 rounded-xl text-sm font-bold text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
         >
           <span className="flex items-center gap-3">
             {theme === "dark" ? (
@@ -137,7 +137,7 @@ function Sidebar() {
         {/* Logout */}
         <button
           onClick={handleLogout}
-          className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-bold text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors cursor-pointer"
+          className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-bold text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors cursor-pointer"
         >
           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />

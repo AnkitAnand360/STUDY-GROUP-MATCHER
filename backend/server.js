@@ -23,10 +23,6 @@ const matchRoutes = require("./routes/matchRoutes");
 
 const messageRoutes = require("./routes/messageRoutes");
 
-const {
-  generateMatchExplanation,
-} = require("./services/geminiService");
-
 const groupRoutes = require("./routes/groupRoutes");
 
 const plannerRoutes =

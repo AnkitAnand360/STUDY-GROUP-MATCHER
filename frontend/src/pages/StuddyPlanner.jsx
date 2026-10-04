@@ -146,17 +146,17 @@ function StuddyPlanner() {
       {/* Header & Mini Pomodoro Toggle */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-4xl font-extrabold font-heading tracking-tight text-white m-0">
+          <h1 className="text-4xl font-extrabold font-heading tracking-tight text-gray-900 dark:text-white m-0">
             Daily AI Study Planner
           </h1>
-          <p className="text-gray-400 mt-1">
+          <p className="text-gray-600 dark:text-gray-400 mt-1">
             Gemini structured study schedules based on your profile topic focus areas.
           </p>
         </div>
 
         {/* Mini Pomodoro Toggle Widget */}
-        <div className="flex items-center gap-3 bg-gray-900/50 border border-gray-800 px-4 py-2.5 rounded-2xl shadow-sm self-start md:self-auto select-none">
-          <span className="text-lg font-bold font-numeric text-white tabular-nums">
+        <div className="flex items-center gap-3 bg-gray-100 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-800 px-4 py-2.5 rounded-2xl shadow-sm self-start md:self-auto select-none">
+          <span className="text-lg font-bold font-numeric text-gray-900 dark:text-white tabular-nums">
             ⏱️ {String(minutes).padStart(2, "0")}:{String(seconds).padStart(2, "0")}
           </span>
           <Button
@@ -171,7 +171,7 @@ function StuddyPlanner() {
       </div>
 
       {error && (
-        <div className="bg-red-950 text-red-300 p-4 rounded-xl">
+        <div className="bg-red-500/10 border border-red-500/20 text-red-600 dark:text-red-300 p-4 rounded-xl">
           {error}
         </div>
       )}
@@ -193,7 +193,7 @@ function StuddyPlanner() {
                 className={`flex-1 md:flex-initial flex flex-col items-center justify-center p-3 rounded-2xl transition-all cursor-pointer w-14 md:w-16 ${
                   isSelected
                     ? "bg-gradient-to-tr from-purple-600 to-indigo-600 text-white shadow-md scale-105"
-                    : "bg-gray-900/40 hover:bg-gray-850 border border-gray-800/80"
+                    : "bg-gray-100 dark:bg-gray-900/40 hover:bg-gray-200 dark:hover:bg-gray-850 border border-gray-200 dark:border-gray-800/80 text-gray-800 dark:text-gray-200"
                 }`}
               >
                 <span
@@ -240,7 +240,7 @@ function StuddyPlanner() {
         >
           {/* Progress Overview */}
           <Card hoverable={false} className="p-6">
-            <h3 className="text-xl font-bold text-white mb-4">
+            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
               Daily Completion Rate
             </h3>
             <ProgressBar value={completedCount} max={totalCount} />
@@ -262,22 +262,22 @@ function StuddyPlanner() {
                     key={task._id}
                     className={`flex items-start gap-4 p-4 rounded-2xl border transition-all cursor-pointer ${
                       task.completed
-                        ? "bg-purple-950/10 border-purple-900/40"
-                        : "glass-panel border-gray-800/80 hover:border-purple-500/40"
+                        ? "bg-purple-500/10 border-purple-500/30"
+                        : "glass-panel border-gray-200 dark:border-gray-800/80 hover:border-purple-500/40"
                     }`}
                   >
                     <input
                       type="checkbox"
                       checked={task.completed}
                       onChange={() => handleToggleTask(task._id)}
-                      className="mt-1 w-5 h-5 rounded text-purple-600 border-gray-700 bg-gray-900 focus:ring-purple-500 focus:ring-offset-0"
+                      className="mt-1 w-5 h-5 rounded text-purple-600 border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 focus:ring-purple-500 focus:ring-offset-0"
                     />
                     <div className="flex-1 select-none">
                       <span
                         className={`text-base font-semibold leading-tight block ${
                           task.completed
-                            ? "line-through text-gray-600"
-                            : "text-gray-200"
+                            ? "line-through text-gray-400 dark:text-gray-600"
+                            : "text-gray-900 dark:text-gray-200"
                         }`}
                       >
                         {task.title}

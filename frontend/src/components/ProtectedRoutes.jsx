@@ -9,7 +9,7 @@ function ProtectedRoute({ children }) {
   }
 
   return (
-    <div className="min-h-screen bg-[#09090B] text-white overflow-x-hidden relative grid-bg">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#09090B] text-gray-900 dark:text-white overflow-x-hidden relative grid-bg transition-colors duration-200">
       {/* Aurora floating gradient blobs */}
       <div className="aurora-bg">
         <div className="aurora-blob-1"></div>

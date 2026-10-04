@@ -84,7 +84,7 @@ function Settings() {
         <h1 className="text-4xl font-extrabold text-gray-900 dark:text-white mb-2">
           Settings
         </h1>
-        <p className="text-gray-650 dark:text-gray-400">
+        <p className="text-gray-600 dark:text-gray-400">
           Manage your account password, system preferences, and notification options.
         </p>
       </div>
@@ -97,30 +97,32 @@ function Settings() {
             <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
               Appearance
             </h3>
-            <p className="text-sm text-gray-550 dark:text-gray-400 mb-6">
+            <p className="text-sm text-gray-600 dark:text-gray-400 mb-6">
               Customize the look and feel of your SaaS dashboard layout.
             </p>
             <div className="flex gap-4">
               <button
+                type="button"
                 onClick={() => {
                   if (theme === "dark") toggleTheme();
                 }}
                 className={`flex-1 p-4 rounded-2xl border text-center font-bold cursor-pointer transition-colors ${
                   theme === "light"
-                    ? "border-purple-500 bg-purple-50 dark:bg-purple-950/20 text-purple-700 dark:text-purple-305"
-                    : "border-gray-250 dark:border-gray-700 bg-transparent text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-850"
+                    ? "border-purple-500 bg-purple-50 text-purple-700 shadow-sm"
+                    : "border-gray-200 dark:border-gray-700 bg-transparent text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-850"
                 }`}
               >
                 ☀️ Light Mode
               </button>
               <button
+                type="button"
                 onClick={() => {
                   if (theme === "light") toggleTheme();
                 }}
                 className={`flex-1 p-4 rounded-2xl border text-center font-bold cursor-pointer transition-colors ${
                   theme === "dark"
-                    ? "border-purple-500 bg-purple-50 dark:bg-purple-950/20 text-purple-700 dark:text-purple-305"
-                    : "border-gray-250 dark:border-gray-700 bg-transparent text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-850"
+                    ? "border-purple-500 bg-purple-950/40 text-purple-300 shadow-sm"
+                    : "border-gray-200 dark:border-gray-700 bg-transparent text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-850"
                 }`}
               >
                 🌙 Dark Mode
@@ -133,16 +135,16 @@ function Settings() {
             <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
               Notifications
             </h3>
-            <p className="text-sm text-gray-550 dark:text-gray-400 mb-6">
+            <p className="text-sm text-gray-600 dark:text-gray-400 mb-6">
               Toggle how and when you receive matching updates and study group invitations.
             </p>
             <div className="space-y-4">
               <label className="flex items-center justify-between cursor-pointer py-1">
                 <div>
-                  <p className="font-bold text-gray-800 dark:text-gray-250">
+                  <p className="font-bold text-gray-800 dark:text-gray-200">
                     Email Matches
                   </p>
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-gray-500 dark:text-gray-400">
                     Receive daily suggestions for study group partners.
                   </p>
                 </div>
@@ -156,10 +158,10 @@ function Settings() {
 
               <label className="flex items-center justify-between cursor-pointer py-1">
                 <div>
-                  <p className="font-bold text-gray-800 dark:text-gray-250">
+                  <p className="font-bold text-gray-800 dark:text-gray-200">
                     In-App Push Messages
                   </p>
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-gray-500 dark:text-gray-400">
                     Notify about real-time typing and study group message updates.
                   </p>
                 </div>
@@ -173,10 +175,10 @@ function Settings() {
 
               <label className="flex items-center justify-between cursor-pointer py-1">
                 <div>
-                  <p className="font-bold text-gray-800 dark:text-gray-250">
+                  <p className="font-bold text-gray-800 dark:text-gray-200">
                     Weekly Digests
                   </p>
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-gray-500 dark:text-gray-400">
                     A summary report of study plan completion rates and progress.
                   </p>
                 </div>
@@ -196,18 +198,18 @@ function Settings() {
           <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
             Security Settings
           </h3>
-          <p className="text-sm text-gray-550 dark:text-gray-400 mb-6">
+          <p className="text-sm text-gray-600 dark:text-gray-400 mb-6">
             Ensure your account password remains secure.
           </p>
 
           <form onSubmit={handlePasswordChange} className="space-y-4">
             {passwordError && (
-              <div className="bg-red-50 dark:bg-red-950 text-red-700 dark:text-red-300 p-3.5 rounded-xl text-sm font-semibold">
+              <div className="bg-red-50 dark:bg-red-950/40 text-red-700 dark:text-red-300 border border-red-200 dark:border-red-900/60 p-3.5 rounded-xl text-sm font-semibold">
                 {passwordError}
               </div>
             )}
             {passwordSuccess && (
-              <div className="bg-green-50 dark:bg-green-950 text-green-700 dark:text-green-300 p-3.5 rounded-xl text-sm font-semibold">
+              <div className="bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-900/60 p-3.5 rounded-xl text-sm font-semibold">
                 {passwordSuccess}
               </div>
             )}

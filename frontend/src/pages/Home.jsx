@@ -99,7 +99,7 @@ function Home() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#09090B] text-white relative overflow-x-hidden pt-12 md:pt-16 pb-20 grid-bg">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#09090B] text-gray-900 dark:text-white relative overflow-x-hidden pt-12 md:pt-16 pb-20 grid-bg transition-colors duration-200">
       {/* Background Aurora Blobs */}
       <div className="aurora-bg">
         <div className="aurora-blob-1"></div>
@@ -116,11 +116,11 @@ function Home() {
             transition={{ duration: 0.6 }}
             className="space-y-6"
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-purple-500/10 border border-purple-500/30 text-purple-300 rounded-full text-xs font-bold select-none">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-purple-500/10 border border-purple-500/30 text-purple-600 dark:text-purple-300 rounded-full text-xs font-bold select-none">
               <span>🚀</span> AI Powered Study Matching
             </div>
 
-            <h1 className="text-4xl md:text-6xl font-black font-heading leading-tight tracking-tight text-white m-0">
+            <h1 className="text-4xl md:text-6xl font-black font-heading leading-tight tracking-tight text-gray-900 dark:text-white m-0">
               Find Your Perfect <br />
               <span className="bg-gradient-to-r from-purple-500 via-indigo-400 to-cyan-400 bg-clip-text text-transparent">
                 Study Partner
@@ -128,7 +128,7 @@ function Home() {
               with AI
             </h1>
 
-            <p className="text-gray-400 text-base md:text-lg leading-relaxed max-w-xl">
+            <p className="text-gray-600 dark:text-gray-400 text-base md:text-lg leading-relaxed max-w-xl">
               StudyMatch AI uses advanced Gemini reasoning to analyze your skills, subjects, and study availability, matching you with compatible peers in real time.
             </p>
 
@@ -142,9 +142,9 @@ function Home() {
             </div>
 
             {/* Trust Badges */}
-            <div className="pt-6 border-t border-gray-800/80 flex flex-wrap gap-8">
+            <div className="pt-6 border-t border-gray-200 dark:border-gray-800/80 flex flex-wrap gap-8">
               <div>
-                <p className="text-2xl font-black font-numeric text-white">12k+</p>
+                <p className="text-2xl font-black font-numeric text-gray-900 dark:text-white">12k+</p>
                 <p className="text-xs text-gray-500 uppercase font-bold tracking-wider mt-1">Students</p>
               </div>
               <div>
@@ -175,8 +175,8 @@ function Home() {
                 <div className="w-10 h-10 rounded-full bg-purple-500 flex items-center justify-center text-white font-extrabold mx-auto mb-2 shadow-md">
                   A
                 </div>
-                <h4 className="text-xs font-bold text-white truncate">Ankit A.</h4>
-                <p className="text-[9px] text-purple-300 font-extrabold uppercase mt-1">React, DSA</p>
+                <h4 className="text-xs font-bold text-gray-900 dark:text-white truncate">Ankit A.</h4>
+                <p className="text-[9px] text-purple-600 dark:text-purple-300 font-extrabold uppercase mt-1">React, DSA</p>
               </div>
 
               {/* Connecting Pulse SVG Line */}
@@ -192,7 +192,7 @@ function Home() {
               </svg>
 
               {/* Match Percentage Indicator */}
-              <div className="absolute left-[38%] top-[38%] bg-gradient-to-tr from-purple-600 to-cyan-500 px-3 py-1.5 rounded-full text-xs font-black shadow-[0_0_20px_rgba(6,182,212,0.4)] border border-cyan-400/50">
+              <div className="absolute left-[38%] top-[38%] bg-gradient-to-tr from-purple-600 to-cyan-500 px-3 py-1.5 rounded-full text-xs font-black text-white shadow-[0_0_20px_rgba(6,182,212,0.4)] border border-cyan-400/50">
                 98% Match
               </div>
 
@@ -201,8 +201,8 @@ function Home() {
                 <div className="w-10 h-10 rounded-full bg-cyan-500 flex items-center justify-center text-white font-extrabold mx-auto mb-2 shadow-md">
                   S
                 </div>
-                <h4 className="text-xs font-bold text-white truncate">Sophia R.</h4>
-                <p className="text-[9px] text-cyan-300 font-extrabold uppercase mt-1">React, Node</p>
+                <h4 className="text-xs font-bold text-gray-900 dark:text-white truncate">Sophia R.</h4>
+                <p className="text-[9px] text-cyan-600 dark:text-cyan-300 font-extrabold uppercase mt-1">React, Node</p>
               </div>
             </div>
           </motion.div>
@@ -211,7 +211,7 @@ function Home() {
         {/* STATISTICS SECTION */}
         <section className="space-y-6">
           <div className="text-center">
-            <h2 className="text-3xl font-black font-heading tracking-tight text-white m-0">
+            <h2 className="text-3xl font-black font-heading tracking-tight text-gray-900 dark:text-white m-0">
               Trusted by Learning Groups Everywhere
             </h2>
           </div>
@@ -225,7 +225,7 @@ function Home() {
                 <div className="flex justify-between items-start">
                   <div>
                     <span className="text-2xl select-none">{stat.icon}</span>
-                    <h3 className="text-3xl font-black font-numeric mt-2 tracking-tight text-white">
+                    <h3 className="text-3xl font-black font-numeric mt-2 tracking-tight text-gray-900 dark:text-white">
                       {stat.value}
                     </h3>
                   </div>
@@ -242,11 +242,11 @@ function Home() {
         {/* FEATURES SECTION */}
         <section className="space-y-12">
           <div className="text-center max-w-2xl mx-auto space-y-2">
-            <h2 className="text-3xl md:text-4xl font-black font-heading tracking-tight text-white m-0">
+            <h2 className="text-3xl md:text-4xl font-black font-heading tracking-tight text-gray-900 dark:text-white m-0">
               World-Class SaaS Features
             </h2>
-            <p className="text-gray-400 text-sm leading-relaxed">
-              Designed with a premium dark layout, custom AI recommenders, and comprehensive real-time interfaces.
+            <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+              Designed with a premium adaptive layout, custom AI recommenders, and comprehensive real-time interfaces.
             </p>
           </div>
 
@@ -258,14 +258,14 @@ function Home() {
                 className="p-6 flex flex-col justify-between min-h-[220px]"
               >
                 <div>
-                  <h3 className="text-lg font-bold text-white mb-2 leading-snug">
+                  <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2 leading-snug">
                     {feat.title}
                   </h3>
-                  <p className="text-xs text-gray-400 leading-relaxed">
+                  <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">
                     {feat.description}
                   </p>
                 </div>
-                <span className="text-[10px] uppercase font-bold text-gray-600 tracking-wider mt-4 block">
+                <span className="text-[10px] uppercase font-bold text-gray-500 dark:text-gray-400 tracking-wider mt-4 block">
                   StudyMatch Pro &rarr;
                 </span>
               </Card>

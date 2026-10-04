@@ -35,7 +35,7 @@ function Navbar() {
 
   return (
     <header
-      className={`flex items-center justify-between px-5 py-4 bg-white dark:bg-gray-900 border-b border-gray-150 dark:border-gray-800 w-full z-30 select-none ${
+      className={`flex items-center justify-between px-5 py-4 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 w-full z-30 select-none ${
         token ? "fixed top-0 left-0 lg:hidden" : "sticky top-0"
       }`}
     >
@@ -45,50 +45,59 @@ function Navbar() {
         </h1>
       </Link>
 
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-3">
         {token ? (
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            aria-label="Toggle menu"
-            className="text-gray-550 dark:text-gray-400 p-2 hover:bg-gray-50 dark:hover:bg-gray-850 rounded-xl transition-colors cursor-pointer"
-          >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
+          <>
+            <button
+              onClick={toggleTheme}
+              aria-label="Toggle theme"
+              className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl text-sm transition-colors cursor-pointer text-gray-600 dark:text-gray-400"
             >
-              {isOpen ? (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2.5"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              ) : (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2.5"
-                  d="M4 6h16M4 12h16m-7 6h7"
-                />
-              )}
-            </svg>
-          </button>
+              {theme === "dark" ? "☀️" : "🌙"}
+            </button>
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              aria-label="Toggle menu"
+              className="text-gray-600 dark:text-gray-400 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl transition-colors cursor-pointer"
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                {isOpen ? (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2.5"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                ) : (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2.5"
+                    d="M4 6h16M4 12h16m-7 6h7"
+                  />
+                )}
+              </svg>
+            </button>
+          </>
         ) : (
           <div className="flex items-center gap-5">
             <Link
               to="/"
-              className={`font-semibold hover:text-purple-650 transition-colors text-sm ${
-                isActive("/") ? "text-purple-600 border-b-2 border-purple-600 pb-0.5" : "text-gray-650 dark:text-gray-300"
+              className={`font-semibold hover:text-purple-600 transition-colors text-sm ${
+                isActive("/") ? "text-purple-600 border-b-2 border-purple-600 pb-0.5" : "text-gray-600 dark:text-gray-300"
               }`}
             >
               Home
             </Link>
             <Link
               to="/login"
-              className={`font-semibold hover:text-purple-650 transition-colors text-sm ${
-                isActive("/login") ? "text-purple-600 border-b-2 border-purple-600 pb-0.5" : "text-gray-650 dark:text-gray-300"
+              className={`font-semibold hover:text-purple-600 transition-colors text-sm ${
+                isActive("/login") ? "text-purple-600 border-b-2 border-purple-600 pb-0.5" : "text-gray-600 dark:text-gray-300"
               }`}
             >
               Login
@@ -100,7 +109,8 @@ function Navbar() {
             </Link>
             <button
               onClick={toggleTheme}
-              className="p-2 hover:bg-gray-50 dark:hover:bg-gray-850 rounded-xl text-sm transition-colors cursor-pointer text-gray-550 dark:text-gray-400"
+              aria-label="Toggle theme"
+              className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl text-sm transition-colors cursor-pointer text-gray-600 dark:text-gray-400"
             >
               {theme === "dark" ? "☀️" : "🌙"}
             </button>
@@ -124,7 +134,7 @@ function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "tween", duration: 0.25 }}
-              className="fixed right-0 top-[57px] bottom-0 w-72 bg-white dark:bg-gray-900 border-l border-gray-150 dark:border-gray-800 p-6 flex flex-col justify-between z-50 overflow-y-auto"
+              className="fixed right-0 top-[57px] bottom-0 w-72 bg-white dark:bg-gray-900 border-l border-gray-200 dark:border-gray-800 p-6 flex flex-col justify-between z-50 overflow-y-auto"
             >
               <nav className="flex flex-col gap-2">
                 {menuItems.map((item) => {
@@ -136,8 +146,8 @@ function Navbar() {
                       onClick={() => setIsOpen(false)}
                       className={`flex items-center px-4 py-3 rounded-xl text-sm font-bold transition-all ${
                         active
-                          ? "bg-purple-50 dark:bg-purple-950/40 text-purple-650 dark:text-purple-305"
-                          : "text-gray-550 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-850 hover:text-gray-900 dark:hover:text-gray-100"
+                          ? "bg-purple-50 dark:bg-purple-950/40 text-purple-700 dark:text-purple-300"
+                          : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-100"
                       }`}
                     >
                       {item.label}
@@ -146,10 +156,10 @@ function Navbar() {
                 })}
               </nav>
 
-              <div className="space-y-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+              <div className="space-y-4 pt-4 border-t border-gray-200 dark:border-gray-800">
                 <button
                   onClick={toggleTheme}
-                  className="w-full flex items-center justify-between px-4 py-2.5 rounded-xl text-sm font-bold text-gray-555 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-850 transition-colors cursor-pointer"
+                  className="w-full flex items-center justify-between px-4 py-2.5 rounded-xl text-sm font-bold text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors cursor-pointer"
                 >
                   <span className="flex items-center gap-3">
                     {theme === "dark" ? "Light Mode" : "Dark Mode"}
@@ -159,7 +169,7 @@ function Navbar() {
 
                 <button
                   onClick={handleLogout}
-                  className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-bold text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors cursor-pointer"
+                  className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-bold text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors cursor-pointer"
                 >
                   Logout
                 </button>

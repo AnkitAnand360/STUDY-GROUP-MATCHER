@@ -125,16 +125,16 @@ function Matches() {
     <div className="space-y-8 text-left">
       {/* Header */}
       <div>
-        <h1 className="text-4xl font-extrabold font-heading tracking-tight text-white m-0">
+        <h1 className="text-4xl font-extrabold font-heading tracking-tight text-gray-900 dark:text-white m-0">
           AI Study Matchmaker
         </h1>
-        <p className="text-gray-400 mt-1">
+        <p className="text-gray-600 dark:text-gray-400 mt-1">
           Gemini AI matched you with these study partners based on your profile skills, subjects, and compatibility.
         </p>
       </div>
 
       {error && (
-        <div className="bg-red-950 text-red-300 p-4 rounded-2xl">
+        <div className="bg-red-500/10 border border-red-500/20 text-red-600 dark:text-red-300 p-4 rounded-2xl">
           {error}
         </div>
       )}
@@ -158,7 +158,7 @@ function Matches() {
               <select
                 value={selectedSubject}
                 onChange={(e) => setSelectedSubject(e.target.value)}
-                className="border border-gray-800 bg-gray-900 rounded-xl p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-205 font-semibold transition-colors"
+                className="border border-gray-300 dark:border-gray-800 bg-white dark:bg-gray-900 rounded-xl p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-900 dark:text-gray-200 font-semibold transition-colors"
               >
                 {allSubjects.map((sub) => (
                   <option key={sub} value={sub}>
@@ -176,7 +176,7 @@ function Matches() {
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="border border-gray-800 bg-gray-900 rounded-xl p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-205 font-semibold transition-colors"
+                className="border border-gray-300 dark:border-gray-800 bg-white dark:bg-gray-900 rounded-xl p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-900 dark:text-gray-200 font-semibold transition-colors"
               >
                 <option value="highest">Highest Match</option>
                 <option value="availability">Key Competency</option>
@@ -228,17 +228,17 @@ function Matches() {
                       {/* Profile details */}
                       <div className="space-y-1">
                         <div className="flex items-center gap-2">
-                          <h3 className="text-xl font-black text-white m-0">
+                          <h3 className="text-xl font-black text-gray-900 dark:text-white m-0">
                             {match.name}
                           </h3>
-                          <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 bg-gray-900/80 border border-gray-800 text-gray-400 rounded-md">
+                          <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 bg-gray-100 dark:bg-gray-900/80 border border-gray-200 dark:border-gray-800 text-gray-600 dark:text-gray-400 rounded-md">
                             {match.year}
                           </span>
                         </div>
                         <p className="text-xs font-semibold text-gray-500">
                           {match.department} • {match.email}
                         </p>
-                        <div className="flex items-center gap-2 text-xs text-cyan-300 font-bold mt-1">
+                        <div className="flex items-center gap-2 text-xs text-cyan-600 dark:text-cyan-300 font-bold mt-1">
                           <span>📅 Free:</span>
                           <span className="bg-cyan-500/10 px-2 py-0.5 rounded-md border border-cyan-500/20">
                             {match.availability}
@@ -248,12 +248,12 @@ function Matches() {
                     </div>
 
                     {/* Right: Radial Match Score & Actions */}
-                    <div className="flex items-center gap-6 justify-between lg:justify-end self-stretch lg:self-auto pt-4 lg:pt-0 border-t lg:border-t-0 border-gray-800/80">
+                    <div className="flex items-center gap-6 justify-between lg:justify-end self-stretch lg:self-auto pt-4 lg:pt-0 border-t lg:border-t-0 border-gray-200 dark:border-gray-800/80">
                       {/* Radial Progress Circle */}
                       <div className="flex items-center gap-3 select-none">
                         <div className="relative w-12 h-12 flex items-center justify-center">
                           <svg className="w-12 h-12 text-cyan-400" viewBox="0 0 36 36">
-                            <circle cx="18" cy="18" r="14" fill="none" stroke="rgba(255, 255, 255, 0.05)" strokeWidth="3" />
+                            <circle cx="18" cy="18" r="14" fill="none" stroke="rgba(124, 58, 237, 0.1)" strokeWidth="3" />
                             <circle
                               cx="18"
                               cy="18"
@@ -265,7 +265,7 @@ function Matches() {
                               strokeLinecap="round"
                             />
                           </svg>
-                          <span className="absolute text-xs font-black font-numeric text-white">
+                          <span className="absolute text-xs font-black font-numeric text-gray-900 dark:text-white">
                             {match.score}%
                           </span>
                         </div>
@@ -303,18 +303,18 @@ function Matches() {
                       animate={{ opacity: 1, height: "auto" }}
                       exit={{ opacity: 0, height: 0 }}
                       transition={{ duration: 0.25 }}
-                      className="mt-6 pt-6 border-t border-gray-800/80 text-sm space-y-4"
+                      className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-800/80 text-sm space-y-4"
                     >
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                          <h4 className="font-extrabold text-xs uppercase tracking-wider text-gray-400 mb-2">
+                          <h4 className="font-extrabold text-xs uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">
                             Key Skills & Topics
                           </h4>
                           <div className="flex flex-wrap gap-1.5 mb-2">
                             {match.skills.map((s, idx) => (
                               <span
                                 key={idx}
-                                className="px-2 py-0.5 bg-purple-500/10 text-purple-300 border border-purple-500/20 rounded-md text-xs font-bold"
+                                className="px-2 py-0.5 bg-purple-500/10 text-purple-600 dark:text-purple-300 border border-purple-500/20 rounded-md text-xs font-bold"
                               >
                                 {s}
                               </span>
@@ -324,7 +324,7 @@ function Matches() {
                             {match.subjects.map((sub, idx) => (
                               <span
                                 key={idx}
-                                className="px-2 py-0.5 bg-blue-500/10 text-blue-300 border border-blue-500/20 rounded-md text-xs font-bold"
+                                className="px-2 py-0.5 bg-blue-500/10 text-blue-600 dark:text-blue-300 border border-blue-500/20 rounded-md text-xs font-bold"
                               >
                                 {sub}
                               </span>
@@ -333,10 +333,10 @@ function Matches() {
                         </div>
 
                         <div>
-                          <h4 className="font-extrabold text-xs uppercase tracking-wider text-gray-400 mb-2">
+                          <h4 className="font-extrabold text-xs uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">
                             Study Target Goal
                           </h4>
-                          <p className="text-gray-400 italic font-medium">
+                          <p className="text-gray-600 dark:text-gray-400 italic font-medium">
                             "{match.studyGoal || "No goals defined yet."}"
                           </p>
                         </div>
@@ -344,10 +344,10 @@ function Matches() {
 
                       {match.explanation && (
                         <div className="bg-gradient-to-br from-purple-500/10 via-indigo-500/5 to-cyan-500/10 border-l-4 border-cyan-400 p-4 rounded-r-xl">
-                          <h4 className="font-black text-cyan-300 text-xs mb-1.5 uppercase tracking-wider">
+                          <h4 className="font-black text-cyan-600 dark:text-cyan-300 text-xs mb-1.5 uppercase tracking-wider">
                             Gemini Match Report Summary
                           </h4>
-                          <p className="text-gray-200 leading-relaxed font-medium">
+                          <p className="text-gray-800 dark:text-gray-200 leading-relaxed font-medium">
                             {match.explanation}
                           </p>
                         </div>

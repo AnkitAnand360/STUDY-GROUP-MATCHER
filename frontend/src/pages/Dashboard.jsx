@@ -92,10 +92,10 @@ function Dashboard() {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-4xl font-extrabold font-heading tracking-tight text-white m-0">
+          <h1 className="text-4xl font-extrabold font-heading tracking-tight text-gray-900 dark:text-white m-0">
             Developer Workspace
           </h1>
-          <p className="text-gray-400 mt-1">
+          <p className="text-gray-600 dark:text-gray-400 mt-1">
             Overview of your study plans, streaks, groups, and AI match recommendations.
           </p>
         </div>
@@ -110,7 +110,7 @@ function Dashboard() {
           {/* Level Progress */}
           <div className="flex-1 space-y-2">
             <div className="flex justify-between items-baseline select-none">
-              <span className="text-sm font-extrabold uppercase text-purple-400 tracking-wider">
+              <span className="text-sm font-extrabold uppercase text-purple-600 dark:text-purple-400 tracking-wider">
                 Level 3 Student
               </span>
               <span className="text-xs text-gray-500 font-bold">240 / 500 XP to Level 4</span>
@@ -120,13 +120,13 @@ function Dashboard() {
 
           {/* Streaks & Badges */}
           <div className="flex items-center gap-4 flex-wrap">
-            <div className="flex items-center gap-2 bg-purple-500/10 border border-purple-500/20 px-3 py-1.5 rounded-xl text-purple-300 font-bold text-xs select-none">
+            <div className="flex items-center gap-2 bg-purple-500/10 border border-purple-500/20 px-3 py-1.5 rounded-xl text-purple-600 dark:text-purple-300 font-bold text-xs select-none">
               🔥 8 Day Streak
             </div>
-            <div className="flex items-center gap-2 bg-cyan-500/10 border border-cyan-500/20 px-3 py-1.5 rounded-xl text-cyan-300 font-bold text-xs select-none">
+            <div className="flex items-center gap-2 bg-cyan-500/10 border border-cyan-500/20 px-3 py-1.5 rounded-xl text-cyan-700 dark:text-cyan-300 font-bold text-xs select-none">
               ⚡ Speed Runner
             </div>
-            <div className="flex items-center gap-2 bg-indigo-500/10 border border-indigo-500/20 px-3 py-1.5 rounded-xl text-indigo-300 font-bold text-xs select-none">
+            <div className="flex items-center gap-2 bg-indigo-500/10 border border-indigo-500/20 px-3 py-1.5 rounded-xl text-indigo-700 dark:text-indigo-300 font-bold text-xs select-none">
               🎯 Top Solver
             </div>
           </div>
@@ -142,7 +142,7 @@ function Dashboard() {
             <h4 className="text-[10px] uppercase font-bold tracking-wider text-gray-500">
               Study Streak
             </h4>
-            <p className="text-2xl font-black font-numeric text-white mt-1">
+            <p className="text-2xl font-black font-numeric text-gray-900 dark:text-white mt-1">
               8 Days
             </p>
           </div>
@@ -155,7 +155,7 @@ function Dashboard() {
             <h4 className="text-[10px] uppercase font-bold tracking-wider text-gray-500">
               Total Tasks
             </h4>
-            <p className="text-2xl font-black font-numeric text-white mt-1">
+            <p className="text-2xl font-black font-numeric text-gray-900 dark:text-white mt-1">
               {metrics.totalTasks} Tasks
             </p>
           </div>
@@ -168,7 +168,7 @@ function Dashboard() {
             <h4 className="text-[10px] uppercase font-bold tracking-wider text-gray-500">
               AI Partners
             </h4>
-            <p className="text-2xl font-black font-numeric text-white mt-1">
+            <p className="text-2xl font-black font-numeric text-gray-900 dark:text-white mt-1">
               {partnerCount} Peers
             </p>
           </div>
@@ -181,7 +181,7 @@ function Dashboard() {
             <h4 className="text-[10px] uppercase font-bold tracking-wider text-gray-500">
               Active Groups
             </h4>
-            <p className="text-2xl font-black font-numeric text-white mt-1">
+            <p className="text-2xl font-black font-numeric text-gray-900 dark:text-white mt-1">
               {metrics.totalGroups} Rooms
             </p>
           </div>
@@ -262,11 +262,11 @@ function Dashboard() {
                 Organize study intervals with Pomodoro counters.
               </p>
 
-              <div className="flex flex-col items-center justify-center py-5 bg-gray-900/60 rounded-2xl border border-gray-800/60">
-                <span className="text-4xl font-black font-numeric text-white select-none tabular-nums">
+              <div className="flex flex-col items-center justify-center py-5 bg-gray-100 dark:bg-gray-900/60 rounded-2xl border border-gray-200 dark:border-gray-800/60">
+                <span className="text-4xl font-black font-numeric text-gray-900 dark:text-white select-none tabular-nums">
                   {String(minutes).padStart(2, "0")}:{String(seconds).padStart(2, "0")}
                 </span>
-                <span className="text-[9px] uppercase font-bold tracking-wider text-purple-500 mt-2">
+                <span className="text-[9px] uppercase font-bold tracking-wider text-purple-600 dark:text-purple-400 mt-2">
                   {isActive ? "Stay Focused 🎯" : "Ready to study"}
                 </span>
               </div>
@@ -295,13 +295,13 @@ function Dashboard() {
               {/* SVG Donut */}
               <div className="relative flex items-center justify-center">
                 <svg className="w-28 h-28 text-cyan-400" viewBox="0 0 36 36">
-                  <circle cx="18" cy="18" r="15.915" fill="none" stroke="rgba(255, 255, 255, 0.04)" strokeWidth="3" />
+                  <circle cx="18" cy="18" r="15.915" fill="none" stroke="rgba(124, 58, 237, 0.1)" strokeWidth="3" />
                   <circle cx="18" cy="18" r="15.915" fill="none" stroke="#7C3AED" strokeWidth="3" strokeDasharray="45 55" strokeDashoffset="25" />
                   <circle cx="18" cy="18" r="15.915" fill="none" stroke="#06B6D4" strokeWidth="3" strokeDasharray="30 70" strokeDashoffset="75" />
                   <circle cx="18" cy="18" r="15.915" fill="none" stroke="#6366F1" strokeWidth="3" strokeDasharray="25 75" strokeDashoffset="5" />
                 </svg>
                 <div className="absolute text-center select-none">
-                  <span className="text-lg font-black font-numeric text-white">3</span>
+                  <span className="text-lg font-black font-numeric text-gray-900 dark:text-white">3</span>
                   <p className="text-[8px] uppercase text-gray-500 font-bold">Topics</p>
                 </div>
               </div>
@@ -309,15 +309,15 @@ function Dashboard() {
               <div className="space-y-2 text-xs">
                 <div className="flex items-center gap-2">
                   <span className="w-2.5 h-2.5 rounded-full bg-purple-500"></span>
-                  <span className="text-gray-300 font-semibold">React (45%)</span>
+                  <span className="text-gray-700 dark:text-gray-300 font-semibold">React (45%)</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="w-2.5 h-2.5 rounded-full bg-cyan-500"></span>
-                  <span className="text-gray-300 font-semibold">DSA (30%)</span>
+                  <span className="text-gray-700 dark:text-gray-300 font-semibold">DSA (30%)</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="w-2.5 h-2.5 rounded-full bg-indigo-500"></span>
-                  <span className="text-gray-300 font-semibold">Node (25%)</span>
+                  <span className="text-gray-700 dark:text-gray-300 font-semibold">Node (25%)</span>
                 </div>
               </div>
             </div>

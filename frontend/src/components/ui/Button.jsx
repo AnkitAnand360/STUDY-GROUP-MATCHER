@@ -18,12 +18,13 @@ function Button({
     primary:
       "bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-500 hover:opacity-95 text-white shadow-[0_0_15px_rgba(124,58,237,0.25)] hover:shadow-[0_0_25px_rgba(6,182,212,0.45)] border border-transparent font-extrabold",
     secondary:
-      "bg-transparent border border-purple-500/40 hover:border-purple-500 hover:bg-purple-500/10 text-purple-300 shadow-[0_0_15px_rgba(124,58,237,0.15)]",
-    danger: "bg-red-500/20 hover:bg-red-500/30 text-red-200 border border-red-500/40 shadow-[0_0_15px_rgba(239,68,68,0.15)]",
+      "bg-transparent border border-purple-500/50 hover:border-purple-600 dark:hover:border-purple-500 hover:bg-purple-500/10 text-purple-700 dark:text-purple-300 shadow-[0_0_15px_rgba(124,58,237,0.15)]",
+    danger:
+      "bg-red-500/10 dark:bg-red-500/20 hover:bg-red-500/20 dark:hover:bg-red-500/30 text-red-600 dark:text-red-200 border border-red-500/30 dark:border-red-500/40 shadow-[0_0_15px_rgba(239,68,68,0.15)]",
     outline:
-      "border border-gray-800 bg-gray-900/60 text-gray-300 hover:bg-gray-850 hover:border-gray-700",
+      "border border-gray-300 dark:border-gray-800 bg-white/70 dark:bg-gray-900/60 text-gray-800 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-850 hover:border-gray-400 dark:hover:border-gray-700",
     ghost:
-      "text-gray-400 hover:bg-gray-850 hover:text-white",
+      "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-850 hover:text-gray-900 dark:hover:text-white",
   };
 
   const sizes = {

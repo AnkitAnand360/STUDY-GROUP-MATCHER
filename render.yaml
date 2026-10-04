@@ -13,7 +13,3 @@ services:
         generateValue: true
       - key: GEMINI_API_KEY
         sync: false
-      - key: EMAIL_USER
-        sync: false
-      - key: EMAIL_PASS
-        sync: false
