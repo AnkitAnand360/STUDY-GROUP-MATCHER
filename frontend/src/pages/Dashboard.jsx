@@ -1,218 +1,340 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
-import Card from "../components/ui/Card";
-import Button from "../components/ui/Button";
-import ProgressBar from "../components/ui/ProgressBar";
-import Loader from "../components/ui/Loader";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useTheme } from "../context/ThemeContext";
+import {
+  Search,
+  Bell,
+  ChevronDown,
+  Users,
+  ArrowUpRight,
+  Bookmark,
+  BarChart2,
+  User,
+  Zap,
+  Sun,
+  Moon,
+} from "lucide-react";
+
+const TRENDING_TOPICS = [
+  { id: 1, rank: 1, tag: "🔥 AI in 2026", posts: "152K posts", change: "↑ 48%", color: "bg-purple-600/30 text-purple-400 border-purple-500/40" },
+  { id: 2, rank: 2, tag: "↗ Web Development", posts: "98K posts", change: "↑ 32%", color: "bg-amber-500/30 text-amber-400 border-amber-500/40" },
+  { id: 3, rank: 3, tag: "↗ MERN Stack", posts: "76K posts", change: "↑ 28%", color: "bg-yellow-500/30 text-yellow-400 border-yellow-500/40" },
+  { id: 4, rank: 4, tag: "🔥 Cyber Security", posts: "61K posts", change: "↑ 24%", color: "bg-purple-600/30 text-purple-400 border-purple-500/40" },
+  { id: 5, rank: 5, tag: "↗ Job Opportunities", posts: "55K posts", change: "↑ 20%", color: "bg-purple-600/30 text-purple-400 border-purple-500/40" },
+];
 
 function Dashboard() {
-  const [metrics, setMetrics] = useState({
-    totalTasks: 0,
-    completedTasks: 0,
-    totalGroups: 0,
-  });
-  const [partnerCount, setPartnerCount] = useState(0);
-  const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [timeRange, setTimeRange] = useState("Last 7 Days");
+  const [showDropdown, setShowDropdown] = useState(false);
+  const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
 
-  // Pomodoro Timer State
-  const [minutes, setMinutes] = useState(25);
-  const [seconds, setSeconds] = useState(0);
-  const [isActive, setIsActive] = useState(false);
-
-  useEffect(() => {
-    fetchDashboardData();
-  }, []);
-
-  // Pomodoro Countdown Logic
-  useEffect(() => {
-    let interval = null;
-    if (isActive) {
-      interval = setInterval(() => {
-        if (seconds === 0) {
-          if (minutes === 0) {
-            clearInterval(interval);
-            setIsActive(false);
-            alert("Pomodoro session completed! Time for a short break.");
-            setMinutes(25);
-          } else {
-            setMinutes(minutes - 1);
-            setSeconds(59);
-          }
-        } else {
-          setSeconds(seconds - 1);
-        }
-      }, 1000);
-    } else {
-      clearInterval(interval);
-    }
-    return () => clearInterval(interval);
-  }, [isActive, seconds, minutes]);
-
-  const fetchDashboardData = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      
-      const dashRes = await axios.get("/api/dashboard", {
-        headers: { Authorization: token },
-      });
-      setMetrics(dashRes.data);
-
-      const matchRes = await axios.get("/api/match", {
-        headers: { Authorization: token },
-      });
-      setPartnerCount(matchRes.data.length);
-    } catch (error) {
-      console.error("Error fetching dashboard data", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const toggleTimer = () => setIsActive(!isActive);
-  const resetTimer = () => {
-    setIsActive(false);
-    setMinutes(25);
-    setSeconds(0);
-  };
-
-  if (loading) {
-    return <Loader variant="spinner" className="h-96" />;
-  }
+  const storedUser = localStorage.getItem("user");
+  const user = storedUser ? JSON.parse(storedUser) : { name: "Ankit Anand", email: "ankit@aistudymatcher.io" };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 15 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4 }}
-      className="space-y-8 text-left"
-    >
-      {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-4xl font-extrabold font-heading tracking-tight text-gray-900 dark:text-white m-0">
-            Developer Workspace
-          </h1>
-          <p className="text-gray-600 dark:text-gray-400 mt-1">
-            Overview of your study plans, streaks, groups, and AI match recommendations.
-          </p>
+    <div className="space-y-6 text-left select-none pb-12 transition-colors duration-200">
+      
+      {/* Top Header Bar matching the mockup */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        {/* Search Input */}
+        <div className="relative w-full sm:w-96">
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4" />
+          <input
+            type="text"
+            placeholder="Search trending topics..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full pl-11 pr-4 py-2.5 rounded-2xl bg-white dark:bg-[#0A0A0A] border border-slate-200 dark:border-zinc-800 text-sm text-black dark:text-white placeholder-slate-400 focus:outline-none focus:border-[#8B5CF6] focus:ring-1 focus:ring-[#8B5CF6] shadow-sm transition-all"
+          />
         </div>
-        <Button variant="secondary" onClick={() => navigate("/profile")}>
-          Edit Profile
-        </Button>
-      </div>
 
-      {/* Gamification Indicator Panel */}
-      <Card hoverable={false} glowColor="purple" className="p-6">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-          {/* Level Progress */}
-          <div className="flex-1 space-y-2">
-            <div className="flex justify-between items-baseline select-none">
-              <span className="text-sm font-extrabold uppercase text-purple-600 dark:text-purple-400 tracking-wider">
-                Level 3 Student
+        {/* Right Section: Notification, Theme Toggle & User Profile */}
+        <div className="flex items-center gap-3 self-end sm:self-auto">
+          {/* Quick Theme Toggle Button */}
+          <button
+            onClick={toggleTheme}
+            type="button"
+            aria-label="Toggle theme"
+            title={theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode"}
+            className="p-2.5 rounded-xl bg-white dark:bg-[#0A0A0A] border border-slate-200 dark:border-zinc-800 text-slate-700 dark:text-slate-300 hover:text-[#8B5CF6] dark:hover:text-white hover:border-[#8B5CF6]/50 shadow-sm transition-all cursor-pointer"
+          >
+            {theme === "dark" ? (
+              <Sun className="w-5 h-5 text-amber-400" />
+            ) : (
+              <Moon className="w-5 h-5 text-[#8B5CF6]" />
+            )}
+          </button>
+
+          {/* Notification Bell */}
+          <div className="relative p-2.5 rounded-xl bg-white dark:bg-[#0A0A0A] border border-slate-200 dark:border-zinc-800 text-slate-700 dark:text-slate-300 hover:text-[#8B5CF6] dark:hover:text-white shadow-sm transition-colors cursor-pointer">
+            <Bell className="w-5 h-5" />
+            <span className="absolute top-1.5 right-1.5 w-4 h-4 rounded-full bg-red-500 text-white text-[10px] font-black flex items-center justify-center">
+              2
+            </span>
+          </div>
+
+          {/* User Profile Pill */}
+          <div className="relative">
+            <button
+              onClick={() => setShowDropdown(!showDropdown)}
+              className="flex items-center gap-2.5 px-3 py-1.5 rounded-2xl bg-white dark:bg-[#0A0A0A] border border-slate-200 dark:border-zinc-800 hover:border-[#8B5CF6]/50 shadow-sm transition-all cursor-pointer"
+            >
+              <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-[#6366F1] to-[#8B5CF6] flex items-center justify-center text-white font-bold text-xs">
+                {user.name ? user.name.charAt(0) : "A"}
+              </div>
+              <span className="text-sm font-bold text-black dark:text-white hidden sm:inline">
+                {user.name || "Ankit Anand"}
               </span>
-              <span className="text-xs text-gray-500 font-bold">240 / 500 XP to Level 4</span>
-            </div>
-            <ProgressBar value={240} max={500} showPercentage={false} />
-          </div>
+              <ChevronDown className="w-4 h-4 text-slate-400" />
+            </button>
 
-          {/* Streaks & Badges */}
-          <div className="flex items-center gap-4 flex-wrap">
-            <div className="flex items-center gap-2 bg-purple-500/10 border border-purple-500/20 px-3 py-1.5 rounded-xl text-purple-600 dark:text-purple-300 font-bold text-xs select-none">
-              🔥 8 Day Streak
-            </div>
-            <div className="flex items-center gap-2 bg-cyan-500/10 border border-cyan-500/20 px-3 py-1.5 rounded-xl text-cyan-700 dark:text-cyan-300 font-bold text-xs select-none">
-              ⚡ Speed Runner
-            </div>
-            <div className="flex items-center gap-2 bg-indigo-500/10 border border-indigo-500/20 px-3 py-1.5 rounded-xl text-indigo-700 dark:text-indigo-300 font-bold text-xs select-none">
-              🎯 Top Solver
-            </div>
+            {/* Profile Dropdown */}
+            {showDropdown && (
+              <div className="absolute right-0 mt-2 w-48 rounded-2xl bg-white dark:bg-[#0A0A0A] border border-slate-200 dark:border-zinc-800 shadow-xl p-2 z-50 transition-colors">
+                <Link
+                  to="/profile"
+                  className="block px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-purple-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5"
+                >
+                  My Profile
+                </Link>
+                <Link
+                  to="/settings"
+                  className="block px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-purple-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5"
+                >
+                  Account Settings
+                </Link>
+                <button
+                  type="button"
+                  onClick={() => {
+                    toggleTheme();
+                    setShowDropdown(false);
+                  }}
+                  className="w-full text-left px-3 py-2 rounded-xl text-xs font-semibold text-purple-600 dark:text-purple-400 hover:bg-purple-500/10 cursor-pointer"
+                >
+                  Switch to {theme === "dark" ? "Light" : "Dark"} Mode
+                </button>
+                <div className="my-1 border-t border-slate-100 dark:border-[#212A3D]" />
+                <button
+                  onClick={() => {
+                    localStorage.removeItem("token");
+                    navigate("/login");
+                  }}
+                  className="w-full text-left px-3 py-2 rounded-xl text-xs font-bold text-red-500 hover:bg-red-500/10 cursor-pointer"
+                >
+                  Logout
+                </button>
+              </div>
+            )}
           </div>
         </div>
-      </Card>
-
-      {/* SaaS Statistics Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {/* Streak */}
-        <Card hoverable={true} className="p-5 flex flex-col justify-between min-h-[120px]">
-          <span className="text-2xl select-none mb-2">🔥</span>
-          <div>
-            <h4 className="text-[10px] uppercase font-bold tracking-wider text-gray-500">
-              Study Streak
-            </h4>
-            <p className="text-2xl font-black font-numeric text-gray-900 dark:text-white mt-1">
-              8 Days
-            </p>
-          </div>
-        </Card>
-
-        {/* Tasks Count */}
-        <Card hoverable={true} className="p-5 flex flex-col justify-between min-h-[120px]">
-          <span className="text-2xl select-none mb-2">📚</span>
-          <div>
-            <h4 className="text-[10px] uppercase font-bold tracking-wider text-gray-500">
-              Total Tasks
-            </h4>
-            <p className="text-2xl font-black font-numeric text-gray-900 dark:text-white mt-1">
-              {metrics.totalTasks} Tasks
-            </p>
-          </div>
-        </Card>
-
-        {/* Partners */}
-        <Card hoverable={true} className="p-5 flex flex-col justify-between min-h-[120px]">
-          <span className="text-2xl select-none mb-2">👥</span>
-          <div>
-            <h4 className="text-[10px] uppercase font-bold tracking-wider text-gray-500">
-              AI Partners
-            </h4>
-            <p className="text-2xl font-black font-numeric text-gray-900 dark:text-white mt-1">
-              {partnerCount} Peers
-            </p>
-          </div>
-        </Card>
-
-        {/* Groups */}
-        <Card hoverable={true} className="p-5 flex flex-col justify-between min-h-[120px]">
-          <span className="text-2xl select-none mb-2">💬</span>
-          <div>
-            <h4 className="text-[10px] uppercase font-bold tracking-wider text-gray-500">
-              Active Groups
-            </h4>
-            <p className="text-2xl font-black font-numeric text-gray-900 dark:text-white mt-1">
-              {metrics.totalGroups} Rooms
-            </p>
-          </div>
-        </Card>
       </div>
 
-      {/* Main Charts & Pomodoro section */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* Progress & Area Chart */}
-        <div className="md:col-span-2 space-y-6">
-          {/* Area Chart Card */}
-          <Card hoverable={false} className="p-6">
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-6">
-              Study Time & Focus Metrics
-            </h3>
-            {/* SVG Area Chart */}
-            <div className="relative">
-              <svg className="w-full h-44 text-purple-500" viewBox="0 0 300 100" preserveAspectRatio="none">
-                <defs>
-                  <linearGradient id="area-grad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="rgb(124, 58, 237)" stopOpacity="0.45" />
-                    <stop offset="100%" stopColor="rgb(124, 58, 237)" stopOpacity="0.0" />
-                  </linearGradient>
-                </defs>
-                <path d="M0,80 Q30,70 60,88 T120,40 T180,65 T240,25 T300,50 L300,100 L0,100 Z" fill="url(#area-grad)" />
-                <path d="M0,80 Q30,70 60,88 T120,40 T180,65 T240,25 T300,50" stroke="rgb(124, 58, 237)" strokeWidth="2.5" fill="none" strokeLinecap="round" />
-              </svg>
-              {/* Chart Grid Lines */}
-              <div className="absolute inset-0 border-b border-dashed border-gray-800/60 pointer-events-none -z-10 h-1/2"></div>
+      {/* Top 4 Stat Cards matching the image */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        
+        {/* Card 1: Trending Now */}
+        <div className="p-5 rounded-[24px] bg-white dark:bg-[#0A0A0A] border border-slate-200 dark:border-zinc-800 shadow-sm flex items-center justify-between transition-colors">
+          <div className="space-y-1">
+            <div className="flex items-center gap-1.5 text-xs font-bold text-slate-600 dark:text-slate-300">
+              <span>🔥</span>
+              <span>Trending Now</span>
             </div>
-            <div className="flex justify-between items-center text-[10px] text-gray-500 font-extrabold uppercase mt-4 select-none">
+            <div className="flex items-baseline gap-2 pt-1">
+              <span className="text-2xl font-black text-slate-900 dark:text-white">12.5K</span>
+              <span className="text-xs font-bold text-emerald-500 dark:text-emerald-400 flex items-center">
+                ↑ 12%
+              </span>
+            </div>
+          </div>
+          {/* Sparkline purple wave */}
+          <svg className="w-20 h-10 overflow-visible" viewBox="0 0 80 40">
+            <path
+              d="M 0 30 Q 20 10 40 25 T 80 5"
+              fill="none"
+              stroke="#A855F7"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+            />
+          </svg>
+        </div>
+
+        {/* Card 2: Active Users */}
+        <div className="p-5 rounded-[24px] bg-white dark:bg-[#0A0A0A] border border-slate-200 dark:border-zinc-800 shadow-sm flex items-center justify-between transition-colors">
+          <div className="space-y-1">
+            <div className="flex items-center gap-1.5 text-xs font-bold text-slate-600 dark:text-slate-300">
+              <Users className="w-4 h-4 text-[#6366F1]" />
+              <span>Active Users</span>
+            </div>
+            <div className="flex items-baseline gap-2 pt-1">
+              <span className="text-2xl font-black text-slate-900 dark:text-white">48.7K</span>
+              <span className="text-xs font-bold text-emerald-500 dark:text-emerald-400 flex items-center">
+                ↑ 18%
+              </span>
+            </div>
+          </div>
+          {/* Sparkline blue wave */}
+          <svg className="w-20 h-10 overflow-visible" viewBox="0 0 80 40">
+            <path
+              d="M 0 35 Q 25 20 45 28 T 80 8"
+              fill="none"
+              stroke="#6366F1"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+            />
+          </svg>
+        </div>
+
+        {/* Card 3: Total Views */}
+        <div className="p-5 rounded-[24px] bg-white dark:bg-[#0A0A0A] border border-slate-200 dark:border-zinc-800 shadow-sm flex items-center justify-between transition-colors">
+          <div className="space-y-1">
+            <div className="flex items-center gap-1.5 text-xs font-bold text-slate-600 dark:text-slate-300">
+              <BarChart2 className="w-4 h-4 text-emerald-500 dark:text-emerald-400" />
+              <span>Total Views</span>
+            </div>
+            <div className="flex items-baseline gap-2 pt-1">
+              <span className="text-2xl font-black text-slate-900 dark:text-white">2.3M</span>
+              <span className="text-xs font-bold text-emerald-500 dark:text-emerald-400 flex items-center">
+                ↑ 24%
+              </span>
+            </div>
+          </div>
+          {/* Sparkline green wave */}
+          <svg className="w-20 h-10 overflow-visible" viewBox="0 0 80 40">
+            <path
+              d="M 0 30 Q 30 35 50 15 T 80 5"
+              fill="none"
+              stroke="#10B981"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+            />
+          </svg>
+        </div>
+
+        {/* Card 4: Top Topic */}
+        <div className="p-5 rounded-[24px] bg-white dark:bg-[#0A0A0A] border border-slate-200 dark:border-zinc-800 shadow-sm flex items-center justify-between transition-colors">
+          <div className="space-y-1">
+            <div className="flex items-center gap-1.5 text-xs font-bold text-slate-600 dark:text-slate-300">
+              <span className="text-amber-500 dark:text-amber-400">⭐</span>
+              <span>Top Topic</span>
+            </div>
+            <div className="pt-1">
+              <span className="text-2xl font-black text-slate-900 dark:text-white">#AI</span>
+            </div>
+          </div>
+          {/* 3D Glowing purple star badge */}
+          <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-purple-700 via-indigo-600 to-pink-600 flex items-center justify-center text-white text-xl shadow-lg shadow-purple-500/40">
+            ★
+          </div>
+        </div>
+
+      </div>
+
+      {/* Main Lower Grid matching mockup */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        {/* Left Column: Trending Topics (5 cols) */}
+        <div className="lg:col-span-4 rounded-[26px] bg-white dark:bg-[#0A0A0A] border border-slate-200 dark:border-zinc-800 shadow-sm p-5 sm:p-6 space-y-4 transition-colors">
+          <div className="flex items-center justify-between">
+            <h3 className="text-base font-black text-slate-900 dark:text-white">Trending Topics</h3>
+            <Link
+              to="/chat/lobby"
+              className="text-xs font-bold text-[#8B5CF6] hover:text-[#6366F1] flex items-center gap-1"
+            >
+              <span>See all</span>
+              <ArrowUpRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
+
+          <div className="space-y-3 pt-2">
+            {TRENDING_TOPICS.map((topic) => (
+              <div
+                key={topic.id}
+                className="flex items-center justify-between p-2.5 rounded-xl hover:bg-slate-50 dark:hover:bg-white/[0.03] transition-colors"
+              >
+                <div className="flex items-center gap-3">
+                  <div className={`w-6 h-6 rounded-full border flex items-center justify-center text-xs font-bold ${topic.color}`}>
+                    {topic.rank}
+                  </div>
+                  <div>
+                    <div className="text-xs sm:text-sm font-bold text-black dark:text-white">
+                      {topic.tag}
+                    </div>
+                    <div className="text-[11px] text-slate-500 dark:text-slate-400">
+                      {topic.posts}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="text-xs font-extrabold text-[#8B5CF6]">
+                  {topic.change}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Center Column: Analytics Overview (5 cols) */}
+        <div className="lg:col-span-5 rounded-[26px] bg-white dark:bg-[#0A0A0A] border border-slate-200 dark:border-zinc-800 shadow-sm p-5 sm:p-6 space-y-4 transition-colors">
+          <div className="flex items-center justify-between">
+            <h3 className="text-base font-black text-black dark:text-white">Analytics Overview</h3>
+            <button
+              onClick={() => setTimeRange(timeRange === "Last 7 Days" ? "Last 30 Days" : "Last 7 Days")}
+              className="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-slate-100 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-xs font-bold text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer"
+            >
+              <span>{timeRange}</span>
+              <ChevronDown className="w-3.5 h-3.5" />
+            </button>
+          </div>
+
+          {/* Interactive Line Graph */}
+          <div className="relative pt-4 h-64 flex flex-col justify-between">
+            {/* Horizontal Grid lines */}
+            <div className="absolute inset-0 flex flex-col justify-between py-2 pointer-events-none opacity-20">
+              <div className="border-b border-purple-500/30 w-full" />
+              <div className="border-b border-purple-500/30 w-full" />
+              <div className="border-b border-purple-500/30 w-full" />
+              <div className="border-b border-purple-500/30 w-full" />
+            </div>
+
+            {/* SVG Curve with dots */}
+            <svg className="w-full h-full overflow-visible" viewBox="0 0 380 180">
+              <defs>
+                <linearGradient id="analyticsGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#A855F7" stopOpacity="0.35" />
+                  <stop offset="100%" stopColor="#A855F7" stopOpacity="0.0" />
+                </linearGradient>
+              </defs>
+
+              {/* Shaded Area */}
+              <path
+                d="M 15 140 Q 65 110 115 125 T 215 80 T 315 60 T 365 25 L 365 170 L 15 170 Z"
+                fill="url(#analyticsGrad)"
+              />
+
+              {/* Glowing Line */}
+              <path
+                d="M 15 140 Q 65 110 115 125 T 215 80 T 315 60 T 365 25"
+                fill="none"
+                stroke="#A855F7"
+                strokeWidth="3.5"
+                strokeLinecap="round"
+                className="drop-shadow-[0_0_10px_rgba(168,85,247,0.7)]"
+              />
+
+              {/* Circular Nodes */}
+              <circle cx="15" cy="140" r="4.5" fill="#8B5CF6" stroke="#FFFFFF" strokeWidth="2" />
+              <circle cx="75" cy="118" r="4.5" fill="#8B5CF6" stroke="#FFFFFF" strokeWidth="2" />
+              <circle cx="135" cy="122" r="4.5" fill="#A855F7" stroke="#FFFFFF" strokeWidth="2" />
+              <circle cx="200" cy="88" r="5" fill="#C084FC" stroke="#FFFFFF" strokeWidth="2" />
+              <circle cx="260" cy="70" r="4.5" fill="#A855F7" stroke="#FFFFFF" strokeWidth="2" />
+              <circle cx="315" cy="60" r="4.5" fill="#C084FC" stroke="#FFFFFF" strokeWidth="2" />
+              <circle cx="365" cy="25" r="5" fill="#38BDF8" stroke="#FFFFFF" strokeWidth="2.5" />
+            </svg>
+
+            {/* X-Axis labels Mon - Sun */}
+            <div className="flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400 pt-2 border-t border-slate-200 dark:border-zinc-800 relative z-10 px-1">
               <span>Mon</span>
               <span>Tue</span>
               <span>Wed</span>
@@ -221,110 +343,76 @@ function Dashboard() {
               <span>Sat</span>
               <span>Sun</span>
             </div>
-          </Card>
-
-          {/* GitHub Style Study Map Heatmap */}
-          <Card hoverable={false} className="p-6">
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
-              Weekly Activity Map
-            </h3>
-            <p className="text-xs text-gray-500 mb-6">
-              Track study plan check-off tasks completed daily over the past weeks.
-            </p>
-            {/* Heatmap Grid */}
-            <div className="grid grid-flow-col grid-rows-7 gap-1.5 overflow-x-auto pr-1 py-1">
-              {Array.from({ length: 49 }).map((_, idx) => {
-                const colors = [
-                  "bg-gray-850",
-                  "bg-purple-950/40",
-                  "bg-purple-800/60",
-                  "bg-purple-600",
-                  "bg-cyan-950/30",
-                  "bg-cyan-800/60",
-                  "bg-cyan-500",
-                ];
-                const col = colors[Math.floor(Math.random() * colors.length)];
-                return <div key={idx} className={`w-3.5 h-3.5 rounded-sm ${col}`}></div>;
-              })}
-            </div>
-          </Card>
+          </div>
         </div>
 
-        {/* Right side: Pomodoro Timer & Donut Chart */}
-        <div className="space-y-6">
-          {/* Pomodoro Timer widget */}
-          <Card hoverable={false} className="p-6 flex flex-col justify-between min-h-[280px]">
-            <div>
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
-                Focus Session Timer
-              </h3>
-              <p className="text-xs text-gray-500 dark:text-gray-400 mb-6">
-                Organize study intervals with Pomodoro counters.
+        {/* Right Column: Your Quick Access & Go Pro (3 cols) */}
+        <div className="lg:col-span-3 space-y-4">
+          
+          {/* Quick Access Card */}
+          <div className="rounded-[26px] bg-white dark:bg-[#0A0A0A] border border-slate-200 dark:border-zinc-800 shadow-sm p-5 space-y-3 transition-colors">
+            <h3 className="text-sm font-bold text-slate-900 dark:text-white mb-2">Your Quick Access</h3>
+            
+            <Link
+              to="/matches"
+              className="flex items-center justify-between p-3 rounded-2xl bg-white dark:bg-zinc-900 hover:bg-slate-50 dark:hover:bg-zinc-800 text-xs font-semibold text-slate-700 dark:text-slate-200 transition-colors border border-slate-100 dark:border-zinc-800/80"
+            >
+              <div className="flex items-center gap-2.5">
+                <BarChart2 className="w-4 h-4 text-[#8B5CF6]" />
+                <span>View Analytics</span>
+              </div>
+              <span className="text-slate-400">›</span>
+            </Link>
+
+            <Link
+              to="/planner"
+              className="flex items-center justify-between p-3 rounded-2xl bg-white dark:bg-zinc-900 hover:bg-slate-50 dark:hover:bg-zinc-800 text-xs font-semibold text-slate-700 dark:text-slate-200 transition-colors border border-slate-100 dark:border-zinc-800/80"
+            >
+              <div className="flex items-center gap-2.5">
+                <Bookmark className="w-4 h-4 text-[#6366F1]" />
+                <span>Save Trending Topics</span>
+              </div>
+              <span className="text-slate-400">›</span>
+            </Link>
+
+            <Link
+              to="/profile"
+              className="flex items-center justify-between p-3 rounded-2xl bg-white dark:bg-zinc-900 hover:bg-slate-50 dark:hover:bg-zinc-800 text-xs font-semibold text-slate-700 dark:text-slate-200 transition-colors border border-slate-100 dark:border-zinc-800/80"
+            >
+              <div className="flex items-center gap-2.5">
+                <User className="w-4 h-4 text-[#8B5CF6]" />
+                <span>Update Profile</span>
+              </div>
+              <span className="text-slate-400">›</span>
+            </Link>
+          </div>
+
+          {/* Go Pro Card */}
+          <div className="rounded-[26px] bg-gradient-to-r from-purple-100 via-purple-50 to-indigo-100 dark:from-purple-900/40 dark:via-[#0F0D1C] dark:to-indigo-950/40 border border-purple-200 dark:border-purple-500/30 p-5 flex items-center justify-between shadow-sm dark:shadow-lg dark:shadow-purple-950/40 transition-colors">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <span className="text-xl">👑</span>
+                <span className="text-sm font-black text-slate-900 dark:text-white font-heading">Go Pro</span>
+              </div>
+              <p className="text-[11px] text-slate-600 dark:text-slate-300">
+                Unlock more features!
               </p>
-
-              <div className="flex flex-col items-center justify-center py-5 bg-gray-100 dark:bg-gray-900/60 rounded-2xl border border-gray-200 dark:border-gray-800/60">
-                <span className="text-4xl font-black font-numeric text-gray-900 dark:text-white select-none tabular-nums">
-                  {String(minutes).padStart(2, "0")}:{String(seconds).padStart(2, "0")}
-                </span>
-                <span className="text-[9px] uppercase font-bold tracking-wider text-purple-600 dark:text-purple-400 mt-2">
-                  {isActive ? "Stay Focused 🎯" : "Ready to study"}
-                </span>
-              </div>
             </div>
 
-            <div className="flex gap-2 mt-6">
-              <Button
-                onClick={toggleTimer}
-                variant={isActive ? "outline" : "primary"}
-                className="flex-1"
-              >
-                {isActive ? "Pause" : "Start"}
-              </Button>
-              <Button onClick={resetTimer} variant="outline" className="px-4">
-                Reset
-              </Button>
-            </div>
-          </Card>
+            <button
+              onClick={() => alert("Go Pro unlocked for your account!")}
+              className="px-4 py-2 rounded-xl bg-gradient-to-r from-[#8B5CF6] to-[#6366F1] hover:opacity-95 text-white font-bold text-xs shadow-md shadow-purple-500/30 hover:scale-105 active:scale-95 transition-all cursor-pointer flex items-center gap-1.5"
+            >
+              <span>Upgrade</span>
+              <Zap className="w-3 h-3" />
+            </button>
+          </div>
 
-          {/* Donut Chart: Skills distribution */}
-          <Card hoverable={false} className="p-6">
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-6">
-              Topics Breakdown
-            </h3>
-            <div className="flex items-center justify-between gap-4">
-              {/* SVG Donut */}
-              <div className="relative flex items-center justify-center">
-                <svg className="w-28 h-28 text-cyan-400" viewBox="0 0 36 36">
-                  <circle cx="18" cy="18" r="15.915" fill="none" stroke="rgba(124, 58, 237, 0.1)" strokeWidth="3" />
-                  <circle cx="18" cy="18" r="15.915" fill="none" stroke="#7C3AED" strokeWidth="3" strokeDasharray="45 55" strokeDashoffset="25" />
-                  <circle cx="18" cy="18" r="15.915" fill="none" stroke="#06B6D4" strokeWidth="3" strokeDasharray="30 70" strokeDashoffset="75" />
-                  <circle cx="18" cy="18" r="15.915" fill="none" stroke="#6366F1" strokeWidth="3" strokeDasharray="25 75" strokeDashoffset="5" />
-                </svg>
-                <div className="absolute text-center select-none">
-                  <span className="text-lg font-black font-numeric text-gray-900 dark:text-white">3</span>
-                  <p className="text-[8px] uppercase text-gray-500 font-bold">Topics</p>
-                </div>
-              </div>
-              {/* Legend */}
-              <div className="space-y-2 text-xs">
-                <div className="flex items-center gap-2">
-                  <span className="w-2.5 h-2.5 rounded-full bg-purple-500"></span>
-                  <span className="text-gray-700 dark:text-gray-300 font-semibold">React (45%)</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="w-2.5 h-2.5 rounded-full bg-cyan-500"></span>
-                  <span className="text-gray-700 dark:text-gray-300 font-semibold">DSA (30%)</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="w-2.5 h-2.5 rounded-full bg-indigo-500"></span>
-                  <span className="text-gray-700 dark:text-gray-300 font-semibold">Node (25%)</span>
-                </div>
-              </div>
-            </div>
-          </Card>
         </div>
+
       </div>
-    </motion.div>
+
+    </div>
   );
 }
 

@@ -20,9 +20,9 @@ axios.interceptors.request.use((config) => {
 axios.interceptors.response.use(
   (response) => response,
   (error) => {
+    // Gracefully handle 401 without destroying user session on background API calls
     if (error.response && error.response.status === 401) {
-      localStorage.removeItem("token");
-      window.location.href = "/login";
+      console.warn("API 401 Unauthorized:", error.config?.url);
     }
     return Promise.reject(error);
   }

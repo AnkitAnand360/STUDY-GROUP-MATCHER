@@ -9,6 +9,9 @@ const {
   joinGroup,
   getGroups,
   getAllGroups,
+  deleteGroup,
+  inviteMember,
+  removeMember,
 } = require("../controllers/groupController");
 
 router.get(
@@ -33,6 +36,24 @@ router.put(
   "/join/:id",
   authMiddleware,
   joinGroup
+);
+
+router.delete(
+  "/:id",
+  authMiddleware,
+  deleteGroup
+);
+
+router.post(
+  "/:id/invite",
+  authMiddleware,
+  inviteMember
+);
+
+router.delete(
+  "/:id/members/:userId",
+  authMiddleware,
+  removeMember
 );
 
 module.exports = router;

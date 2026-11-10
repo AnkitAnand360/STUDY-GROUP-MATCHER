@@ -6,8 +6,7 @@ export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState(() => {
     const saved = localStorage.getItem("theme");
     if (saved) return saved;
-    const media = window.matchMedia("(prefers-color-scheme: dark)");
-    return media.matches ? "dark" : "light";
+    return "dark";
   });
 
   useEffect(() => {

@@ -7,6 +7,7 @@ const authMiddleware = require("../middleware/authMiddleware");
 const {
   sendMessage,
   getMessages,
+  deleteMessage,
 } = require("../controllers/messageController");
 
 router.post(
@@ -19,6 +20,12 @@ router.get(
   "/:groupId",
   authMiddleware,
   getMessages
+);
+
+router.delete(
+  "/:id",
+  authMiddleware,
+  deleteMessage
 );
 
 module.exports = router;

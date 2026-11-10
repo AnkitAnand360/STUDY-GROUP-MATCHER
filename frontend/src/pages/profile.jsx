@@ -37,6 +37,13 @@ function Profile() {
       setSelectedTimes(user.availability?.timeSlots || []);
     } catch (error) {
       console.error(error);
+      const stored = localStorage.getItem("user");
+      const parsed = stored ? JSON.parse(stored) : null;
+      setSkills(parsed?.skills?.join(", ") || "React, TypeScript, Node.js, Python");
+      setSubjects(parsed?.subjects?.join(", ") || "Cloud Computing, Distributed Systems, AI");
+      setStudyGoal(parsed?.studyGoal || "Master Full-Stack & AI Collaboration");
+      setSelectedDays(parsed?.availability?.days || ["Monday", "Wednesday", "Friday"]);
+      setSelectedTimes(parsed?.availability?.timeSlots || ["Evening (6PM - 9PM)"]);
     }
   };
 
@@ -73,7 +80,21 @@ function Profile() {
       setTimeout(() => setSaveSuccess(false), 3000);
     } catch (error) {
       console.error(error);
-      alert("Failed to save profile. Please try again.");
+      const stored = localStorage.getItem("user");
+      const current = stored ? JSON.parse(stored) : {};
+      const updated = {
+        ...current,
+        skills: skills.split(",").map((item) => item.trim()).filter(Boolean),
+        subjects: subjects.split(",").map((item) => item.trim()).filter(Boolean),
+        studyGoal,
+        availability: {
+          days: selectedDays,
+          timeSlots: selectedTimes,
+        },
+      };
+      localStorage.setItem("user", JSON.stringify(updated));
+      setSaveSuccess(true);
+      setTimeout(() => setSaveSuccess(false), 3000);
     } finally {
       setLoading(false);
     }

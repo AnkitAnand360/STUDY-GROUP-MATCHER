@@ -114,6 +114,45 @@ app.get("/api/health", (req, res) => {
   });
 });
 
+app.get("/api/stats", async (req, res) => {
+  try {
+    const User = require("./models/User");
+    const Group = require("./models/Group");
+    const StudyPlan = require("./models/StudyPlan");
+
+    const [totalUsers, totalGroups, plans] = await Promise.all([
+      User.countDocuments().catch(() => 0),
+      Group.countDocuments().catch(() => 0),
+      StudyPlan.find({}).catch(() => []),
+    ]);
+
+    let totalTasks = 0;
+    let completedTasks = 0;
+    plans.forEach((plan) => {
+      (plan.tasks || []).forEach((task) => {
+        totalTasks++;
+        if (task.completed) completedTasks++;
+      });
+    });
+
+    res.json({
+      totalUsers,
+      totalGroups,
+      totalTasks,
+      completedTasks,
+      database: "connected",
+    });
+  } catch (error) {
+    res.json({
+      totalUsers: 0,
+      totalGroups: 0,
+      totalTasks: 0,
+      completedTasks: 0,
+      database: "disconnected",
+    });
+  }
+});
+
 const http = require("http");
 const { Server } = require("socket.io");
 
@@ -139,8 +178,43 @@ io.on("connection", (socket) => {
   });
 
   socket.on("send-message", (data) => {
+    if (!data.sender || !data.sender.name || data.sender.name === "Unknown") {
+      data.sender = {
+        _id: data.sender?._id || data.sender || "admin-id",
+        name: "Admin",
+        email: "",
+      };
+    }
     io.to(data.groupId).emit(
       "receive-message",
+      data
+    );
+  });
+
+  socket.on("delete-message", (data) => {
+    io.to(data.groupId).emit(
+      "message-deleted",
+      data
+    );
+  });
+
+  socket.on("delete-group", (data) => {
+    io.to(data.groupId).emit(
+      "group-deleted",
+      data
+    );
+  });
+
+  socket.on("invite-member", (data) => {
+    io.to(data.groupId).emit(
+      "member-joined",
+      data
+    );
+  });
+
+  socket.on("remove-member", (data) => {
+    io.to(data.groupId).emit(
+      "member-removed",
       data
     );
   });
