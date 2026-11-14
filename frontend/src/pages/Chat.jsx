@@ -628,20 +628,26 @@ function Chat() {
                         !g.createdBy
                       );
 
+                      const isSelected = groupId === g._id;
+
                       return (
                         <div
                           key={g._id}
                           className={`group/room flex items-center justify-between px-3 py-2 rounded-xl text-xs transition-all ${
-                            groupId === g._id
-                              ? "bg-purple-500/15 border border-purple-500/30 text-purple-700 dark:text-purple-300 font-bold"
-                              : "hover:bg-gray-100 dark:hover:bg-gray-850/50 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 font-medium"
+                            isSelected
+                              ? "bg-white text-black font-bold shadow-sm border border-slate-200 dark:border-white/20"
+                              : "text-slate-600 dark:text-slate-400 hover:bg-white hover:text-black dark:hover:bg-white dark:hover:text-black font-medium"
                           }`}
                         >
                           <button
                             onClick={() => navigate(`/chat/${g._id}`)}
-                            className="flex-1 text-left truncate flex items-center gap-1.5 cursor-pointer"
+                            className={`flex-1 text-left truncate flex items-center gap-1.5 cursor-pointer ${
+                              isSelected ? "text-black font-bold" : "group-hover/room:text-black"
+                            }`}
                           >
-                            <span className="truncate"># {g.name}</span>
+                            <span className={`truncate ${isSelected ? "text-black font-bold" : "group-hover/room:text-black"}`}>
+                              # {g.name}
+                            </span>
                             {isRoomAdmin && (
                               <span className="text-[10px] text-amber-500 font-bold" title="You are Admin">
                                 👑
@@ -657,7 +663,9 @@ function Chat() {
                                 setDeleteConfirmGroupId(g._id);
                                 setShowDeleteGroupModal(true);
                               }}
-                              className="opacity-0 group-hover/room:opacity-100 p-1 text-slate-400 hover:text-red-500 transition-opacity cursor-pointer rounded"
+                              className={`opacity-0 group-hover/room:opacity-100 p-1 hover:text-red-600 transition-opacity cursor-pointer rounded ${
+                                isSelected ? "text-slate-700 hover:text-red-600" : "text-slate-400 group-hover/room:text-slate-700"
+                              }`}
                               title="Delete room (Admin only)"
                               aria-label="Delete room"
                             >
@@ -685,9 +693,9 @@ function Chat() {
                       .map((g) => (
                         <div
                           key={g._id}
-                          className="flex justify-between items-center bg-gray-50 dark:bg-gray-950/60 p-2 rounded-xl border border-gray-200 dark:border-gray-800/80"
+                          className="flex justify-between items-center bg-gray-50 dark:bg-zinc-900/60 hover:bg-white hover:text-black dark:hover:bg-white dark:hover:text-black p-2 rounded-xl border border-gray-200 dark:border-zinc-800 group/explore transition-colors"
                         >
-                          <span className="text-xs font-semibold text-gray-700 dark:text-gray-300 truncate max-w-[110px]">
+                          <span className="text-xs font-semibold text-gray-700 dark:text-gray-300 group-hover/explore:text-black truncate max-w-[110px]">
                             # {g.name}
                           </span>
                           <button

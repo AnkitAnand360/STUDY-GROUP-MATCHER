@@ -109,7 +109,7 @@ function Settings() {
                 className={`flex-1 p-4 rounded-2xl border text-center font-bold cursor-pointer transition-colors ${
                   theme === "light"
                     ? "border-purple-500 bg-purple-50 text-purple-700 shadow-sm"
-                    : "border-gray-200 dark:border-gray-700 bg-transparent text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-850"
+                    : "border-gray-200 dark:border-gray-700 bg-transparent text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-zinc-800"
                 }`}
               >
                 ☀️ Light Mode
@@ -122,7 +122,7 @@ function Settings() {
                 className={`flex-1 p-4 rounded-2xl border text-center font-bold cursor-pointer transition-colors ${
                   theme === "dark"
                     ? "border-purple-500 bg-purple-950/40 text-purple-300 shadow-sm"
-                    : "border-gray-200 dark:border-gray-700 bg-transparent text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-850"
+                    : "border-gray-200 dark:border-gray-700 bg-transparent text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-zinc-800"
                 }`}
               >
                 🌙 Dark Mode

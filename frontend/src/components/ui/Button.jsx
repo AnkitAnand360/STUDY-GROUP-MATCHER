@@ -22,9 +22,9 @@ function Button({
     danger:
       "bg-red-500/10 dark:bg-red-500/20 hover:bg-red-500/20 dark:hover:bg-red-500/30 text-red-600 dark:text-red-200 border border-red-500/30 dark:border-red-500/40 shadow-[0_0_15px_rgba(239,68,68,0.15)]",
     outline:
-      "border border-gray-300 dark:border-gray-800 bg-white/70 dark:bg-gray-900/60 text-gray-800 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-850 hover:border-gray-400 dark:hover:border-gray-700",
+      "border border-gray-300 dark:border-gray-800 bg-white/70 dark:bg-gray-900/60 text-gray-800 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-zinc-800 hover:border-gray-400 dark:hover:border-gray-700",
     ghost:
-      "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-850 hover:text-gray-900 dark:hover:text-white",
+      "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-zinc-800 hover:text-gray-900 dark:hover:text-white",
   };
 
   const sizes = {
