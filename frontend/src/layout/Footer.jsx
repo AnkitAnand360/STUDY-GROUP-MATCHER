@@ -1,7 +1,9 @@
+import { Mail } from "lucide-react";
+
 function Footer() {
   return (
     <footer className="w-full py-8 mt-auto flex flex-col items-center justify-center gap-4 border-t border-slate-200 dark:border-zinc-900 bg-white dark:bg-black select-none text-slate-600 dark:text-slate-300 transition-colors duration-200 font-sans">
-      {/* Social Media Links */}
+      {/* Social & Contact Links */}
       <div className="flex items-center gap-7 text-slate-600 dark:text-slate-300">
         <a
           href="https://github.com"
@@ -40,10 +42,29 @@ function Footer() {
             <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
           </svg>
         </a>
+        <a
+          href="mailto:ankitanand3902@gmail.com"
+          className="hover:text-[#8B5CF6] dark:hover:text-[#8B5CF6] transition-colors"
+          aria-label="Email Support"
+          title="Email Support (ankitanand3902@gmail.com)"
+        >
+          <Mail className="w-5 h-5" />
+        </a>
+      </div>
+
+      {/* Support & Contact Email */}
+      <div className="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400">
+        <span>Support:</span>
+        <a
+          href="mailto:ankitanand3902@gmail.com"
+          className="font-medium text-[#8B5CF6] hover:underline"
+        >
+          ankitanand3902@gmail.com
+        </a>
       </div>
 
       {/* Copyright */}
-      <p className="text-sm font-normal text-slate-500 dark:text-slate-400">
+      <p className="text-xs sm:text-sm font-normal text-slate-500 dark:text-slate-400">
         © AI Study Matcher. All rights reserved.
       </p>
     </footer>

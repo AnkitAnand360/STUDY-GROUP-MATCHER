@@ -402,10 +402,10 @@ function Home() {
               <p className="text-xs text-slate-500 dark:text-slate-400">For platform assistance & inquiries</p>
             </div>
             <a
-              href="mailto:support@aistudymatcher.io"
+              href="mailto:ankitanand3902@gmail.com"
               className="mt-6 text-xs font-bold text-[#8B5CF6] hover:underline inline-flex items-center gap-1"
             >
-              <span>support@aistudymatcher.io</span>
+              <span>ankitanand3902@gmail.com</span>
               <ExternalLink className="w-3.5 h-3.5" />
             </a>
           </div>
